@@ -1,0 +1,19 @@
+# Build output
+server/target/
+client/java/build/
+client/java/out/
+
+# Runtime logs
+server/logs/*.log
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+
+# Compiled helper classes
+*.class
