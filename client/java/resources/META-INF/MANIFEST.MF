@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Nokia-MIDlet-On-Screen-Keypad: no
+MIDlet-1: Avatar 2581 Auto,/icon.png,main.GameMidlet
+MIDlet-Vendor: PGaming
+MicroEdition-Configuration: CLDC-1.0
+MIDlet-Name: Avatar Auto Pro1
+MIDlet-Permissions: javax.microedition.io.Connector.socket,javax.microed
+ ition.io.Connector.http,javax.microedition.io.Connector.sms,javax.wirel
+ ess.messaging.sms.send
+MIDlet-Version: 2.5.8
+MicroEdition-Profile: MIDP-2.0
+
