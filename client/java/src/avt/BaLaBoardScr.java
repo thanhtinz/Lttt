@@ -76,7 +76,7 @@ public final class BaLaBoardScr extends BoardScr {
    public final void commandTab(int var1, int var2) {
       switch (var1) {
          case 20:
-            CasinoService.gI().e();
+            CasinoService.gI().skip();
             break;
          case 21:
             if (this.myCards != null) {
