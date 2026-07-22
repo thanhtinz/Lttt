@@ -760,7 +760,7 @@ public final class BCBoardScr extends BoardScr {
 
    }
 
-   public final void b(byte var1) {
+   public final void onStartGame(byte roomID, byte boardID, byte interval) {
       super.start();
       Canvas.endDlg();
       this.resetGame();
@@ -783,7 +783,7 @@ public final class BCBoardScr extends BoardScr {
 
       BoardScr.isGameEnd = false;
       BoardScr.isStartGame = true;
-      BoardScr.interval = var1;
+      BoardScr.interval = interval;
       BoardScr.currentTime = (long)Canvas.getSecond();
    }
 
