@@ -23,7 +23,7 @@ final class CommandCooking1 extends Command {
             Item var5;
             if (this.food.material[var2] < 50) {
                var5 = FarmScr.getProductByID(this.food.material[var2]);
-               FarmData.getTreeByID(this.food.material[var2]).a(var1, 7, PopupShop.w / 2 - this.food.material.length * 30 * AvMain.hd / 2 + var2 * 30 * AvMain.hd + 15 * (AvMain.hd - 1), (PopupShop.h << 1) + 25 * AvMain.hd + (AvMain.hBlack << 2) + 10 * (AvMain.hd - 1), 3);
+               FarmData.getTreeByID(this.food.material[var2]).paint(var1, 7, PopupShop.w / 2 - this.food.material.length * 30 * AvMain.hd / 2 + var2 * 30 * AvMain.hd + 15 * (AvMain.hd - 1), (PopupShop.h << 1) + 25 * AvMain.hd + (AvMain.hBlack << 2) + 10 * (AvMain.hd - 1), 3);
             } else if (this.food.material[var2] < 100) {
                var5 = FarmScr.getProductByID(this.food.material[var2]);
                AnimalInfo var6 = FarmData.getAnimalByID(this.food.material[var2]);

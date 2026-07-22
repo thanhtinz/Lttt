@@ -25,7 +25,7 @@ public final class mFont implements FontX {
          }
 
          this.d = var2.readByte();
-         FilePack.b(T.ar);
+         FilePack.init(T.ar);
          this.a = FilePack.getImage(String.valueOf(var1));
          FilePack.reset();
       } catch (Exception var4) {

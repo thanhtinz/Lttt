@@ -35,7 +35,7 @@ final class CMDUnkMapScr1 extends Command {
          if (this.j > 0) {
             Canvas.fontChatB.drawString(var1, "lv" + this.j + "+" + this.k + "%", PopupShop.w / 2 - 7, var2, 2);
             var2 += Canvas.fontChatB.getHeight();
-            MapScr.a(var1, "", PopupShop.w / 2 - 8, var2, this.k);
+            MapScr.drawStatBar(var1, "", PopupShop.w / 2 - 8, var2, this.k);
          }
       }
 

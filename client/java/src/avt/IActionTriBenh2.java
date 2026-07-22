@@ -18,7 +18,7 @@ final class IActionTriBenh2 implements IAction {
          Item var3;
          if ((var3 = (Item)FarmScr.listItemFarm.elementAt(var2)).ID == 121) {
             FarmItem var4 = FarmScr.getFarmItem(var3.ID);
-            FarmScr.a(this.a, var4, var3.ID, this.b);
+            FarmScr.setActionAnimalAccess(this.a, var4, var3.ID, this.b);
             var1 = true;
             break;
          }

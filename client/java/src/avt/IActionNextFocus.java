@@ -5,6 +5,6 @@ final class IActionNextFocus implements IAction {
    }
 
    public final void perform() {
-      LoadMap.c();
+      LoadMap.focusNextObject();
    }
 }

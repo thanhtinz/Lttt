@@ -143,7 +143,7 @@ public final class LoginScr extends MyScreen {
       if (isCheckingKeyOnline) {
          return true;
       }
-      String saved = CRes.b(RMS_LOGIN_KEY);
+      String saved = CRes.loadString(RMS_LOGIN_KEY);
       if (saved == null) {
          return false;
       }
@@ -179,7 +179,7 @@ public final class LoginScr extends MyScreen {
                }
 
             
-               CRes.a(LoginScr.RMS_LOGIN_KEY, "");
+               CRes.saveString(LoginScr.RMS_LOGIN_KEY, "");
                LoginScr.isLoginKeyVerified = false;
                LoginScr.currentLoginKey = "";
                LoginScr.nextKeyCheckAt = 0L;
@@ -233,7 +233,7 @@ public final class LoginScr extends MyScreen {
                   Canvas.endDlg();
 
                   if (resp.startsWith("DIS_OLD:")) {
-                     CRes.a(LoginScr.RMS_LOGIN_KEY, "");
+                     CRes.saveString(LoginScr.RMS_LOGIN_KEY, "");
                      Canvas.startOK("Key sudah melebihi batas perangkat!\nIP pengganti: " + resp.substring(8), new IAction() {
                         public void perform() {
                            LoginScr.this.showLoginKeyPopup();
@@ -243,7 +243,7 @@ public final class LoginScr extends MyScreen {
                   }
 
                   if ("MANY_DEVICES".equals(resp)) {
-                     CRes.a(LoginScr.RMS_LOGIN_KEY, "");
+                     CRes.saveString(LoginScr.RMS_LOGIN_KEY, "");
                      Canvas.startOK(T.loginKeyTooManyDevices, new IAction() {
                         public void perform() {
                            LoginScr.this.showLoginKeyPopup();
@@ -256,12 +256,12 @@ public final class LoginScr extends MyScreen {
                      LoginScr.isLoginKeyVerified = true;
                      LoginScr.currentLoginKey = key;
                      LoginScr.nextKeyCheckAt = System.currentTimeMillis() + 10000L;
-                     CRes.a(LoginScr.RMS_LOGIN_KEY, key);
+                     CRes.saveString(LoginScr.RMS_LOGIN_KEY, key);
                      return;
                   }
 
                   if ("USED".equals(resp)) {
-                     CRes.a(LoginScr.RMS_LOGIN_KEY, "");
+                     CRes.saveString(LoginScr.RMS_LOGIN_KEY, "");
                      Canvas.startOK(T.loginKeyUsed, new IAction() {
                         public void perform() {
                            LoginScr.this.showLoginKeyPopup();
@@ -271,7 +271,7 @@ public final class LoginScr extends MyScreen {
                   }
 
                   if ("MANY_DEVICES".equals(resp)) {
-                     CRes.a(LoginScr.RMS_LOGIN_KEY, "");
+                     CRes.saveString(LoginScr.RMS_LOGIN_KEY, "");
                      Canvas.startOK(T.loginKeyManyDevicesClan, new IAction() {
                         public void perform() {
                            LoginScr.this.showLoginKeyPopup();
@@ -281,7 +281,7 @@ public final class LoginScr extends MyScreen {
                   }
 
                   if ("EXPIRED".equals(resp)) {
-                     CRes.a(LoginScr.RMS_LOGIN_KEY, "");
+                     CRes.saveString(LoginScr.RMS_LOGIN_KEY, "");
                      Canvas.startOK(T.loginKeyExpired, new IAction() {
                         public void perform() {
                            LoginScr.this.showLoginKeyPopup();
@@ -290,7 +290,7 @@ public final class LoginScr extends MyScreen {
                      return;
                   }
 
-                  CRes.a(LoginScr.RMS_LOGIN_KEY, "");
+                  CRes.saveString(LoginScr.RMS_LOGIN_KEY, "");
                   Canvas.startOK(T.loginKeyNotFound, new IAction() {
                      public void perform() {
                         GameMidlet.exit();
@@ -379,7 +379,7 @@ public final class LoginScr extends MyScreen {
       isLoginKeyVerified = false;
       currentLoginKey = "";
       nextKeyCheckAt = 0L;
-      CRes.a(RMS_LOGIN_KEY, "");
+      CRes.saveString(RMS_LOGIN_KEY, "");
       suppressAutoKeyPopup = true;
       Session_ME.gI().close();
       LoginScr.gI().switchToMe();
@@ -419,7 +419,7 @@ public final class LoginScr extends MyScreen {
 
    public final void initImg() {
       this.timeOut = System.currentTimeMillis();
-      FilePack.b(T.aw);
+      FilePack.init(T.aw);
 
       try {
          if (GameMidlet.PROVIDER == 6) {
@@ -460,12 +460,12 @@ public final class LoginScr extends MyScreen {
       this.tfEmail.setIputType(0);
       this.tfEmail.q = T.loginEmailOptional;
       this.focus = 0;
-      if (CRes.b(CRes.b) == null) {
-         AvatarData.b();
+      if (CRes.loadString(CRes.secretKey) == null) {
+         AvatarData.saveSecretStrings();
       }
 
       try {
-         String u = CRes.b(RMS_KEY_API_URL);
+         String u = CRes.loadString(RMS_KEY_API_URL);
          if (u != null) {
             u = u.trim();
             if (u.length() > 0) {
@@ -909,7 +909,7 @@ public final class LoginScr extends MyScreen {
    }
 
    private void loadSavedChars() {
-      String var1 = CRes.b(RMS_SAVED_CHARS);
+      String var1 = CRes.loadString(RMS_SAVED_CHARS);
       if (var1 == null || var1.length() == 0) {
          this.savedCharUsers = new String[0];
          this.savedCharPasses = new String[0];
@@ -962,7 +962,7 @@ public final class LoginScr extends MyScreen {
          }
       }
 
-      CRes.a(RMS_SAVED_CHARS, var1.toString());
+      CRes.saveString(RMS_SAVED_CHARS, var1.toString());
    }
 
    private void addCurrentChar() {
@@ -1041,11 +1041,11 @@ public final class LoginScr extends MyScreen {
          }
 
          if (this.tfUser.isFocused()) {
-            super.right = this.tfUser.a();
+            super.right = this.tfUser.getRightCmd();
          } else if (this.tfPass.isFocused()) {
-            super.right = this.tfPass.a();
+            super.right = this.tfPass.getRightCmd();
          } else if (this.tfReg.isFocused()) {
-            super.right = this.tfReg.a();
+            super.right = this.tfReg.getRightCmd();
          }
       } else {
          super.right = null;
@@ -1139,12 +1139,12 @@ public final class LoginScr extends MyScreen {
    public final void updateKey() {
       if (isNewGame) {
          LoginScr loginScr = this;
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             --this.indexNewGame;
             if (this.indexNewGame < 0) {
                this.indexNewGame = (byte)(this.listStrNew.length - 1);
             }
-         } else if (Canvas.a(8)) {
+         } else if (Canvas.isKeyPressed(8)) {
             ++this.indexNewGame;
             if (this.indexNewGame >= this.listStrNew.length) {
                this.indexNewGame = 0;
@@ -1153,7 +1153,7 @@ public final class LoginScr extends MyScreen {
 
          if (Canvas.isPointerClick) {
             for(int n = 0; n < loginScr.listStrNew.length; ++n) {
-               if (Canvas.b(loginScr.xLogin, loginScr.yLogin + loginScr.yNew + n * loginScr.hCellNew, loginScr.wLogin, loginScr.hCellNew)) {
+               if (Canvas.isPointerInRect(loginScr.xLogin, loginScr.yLogin + loginScr.yNew + n * loginScr.hCellNew, loginScr.wLogin, loginScr.hCellNew)) {
                   loginScr.indexNewGame = (byte)n;
                   Canvas.isPointerClick = false;
                   loginScr.K = true;
@@ -1163,7 +1163,7 @@ public final class LoginScr extends MyScreen {
          }
 
          if (loginScr.K) {
-            if (Canvas.isPointerDown && !Canvas.b(loginScr.xLogin, loginScr.yLogin + loginScr.yNew + loginScr.indexNewGame * loginScr.hCellNew, loginScr.wLogin, loginScr.hCellNew)) {
+            if (Canvas.isPointerDown && !Canvas.isPointerInRect(loginScr.xLogin, loginScr.yLogin + loginScr.yNew + loginScr.indexNewGame * loginScr.hCellNew, loginScr.wLogin, loginScr.hCellNew)) {
                loginScr.indexNewGame = -1;
             }
 

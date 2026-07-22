@@ -56,7 +56,7 @@ public final class AvatarData {
    }
 
    public static void checkDataAvatar(Vector var0, int var1, int var2, int var3, int var4, int var5) {
-      CRes.a("avatar", GameMidlet.APP_VERSION);
+      CRes.saveString("avatar", GameMidlet.APP_VERSION);
 
       try {
          playing = 0;
@@ -100,7 +100,7 @@ public final class AvatarData {
          }
 
          var6 = CRes.loadRMS("avatarImgData");
-         l = CRes.b("partImageNormal");
+         l = CRes.loadString("partImageNormal");
          boolean var10000;
          if (var6 == null) {
             var10000 = false;
@@ -224,7 +224,7 @@ public final class AvatarData {
 
          CRes.saveRMS("avatarImgBig", var0.toByteArray());
          var1.close();
-         CRes.a("partImageNormal", l);
+         CRes.saveString("partImageNormal", l);
       } catch (Exception var4) {
       }
 
@@ -448,10 +448,10 @@ public final class AvatarData {
       return var9;
    }
 
-   public static void b() {
-      CRes.a(PaintPopup.name, GameMidlet.n + FarmScr.l);
-      CRes.a(GameMidlet.m, CRes.b + MapScr.j);
-      CRes.a(CRes.b, GameMidlet.l + MiniMap.i);
+   public static void saveSecretStrings() {
+      CRes.saveString(PaintPopup.name, GameMidlet.n + FarmScr.l);
+      CRes.saveString(GameMidlet.m, CRes.secretKey + MapScr.j);
+      CRes.saveString(CRes.secretKey, GameMidlet.l + MiniMap.i);
    }
 
    public static void saveImageData(byte[] var0) throws IOException, RecordStoreException {
@@ -632,7 +632,7 @@ public final class AvatarData {
       listBigImgBB.put("" + var7.id, var7);
    }
 
-   public static void a(Graphics var0, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8, int var9) {
+   public static void drawImgRegion(Graphics var0, int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8, int var9) {
       int var10002;
       if (var8 == 0 || !Canvas.E && !Canvas.F) {
          var10002 = var2 * AvMain.hd;
@@ -658,7 +658,7 @@ public final class AvatarData {
       }
    }
 
-   public static void c() {
+   public static void saveProvider() {
       ByteArrayOutputStream var0 = new ByteArrayOutputStream();
       DataOutputStream var1 = new DataOutputStream(var0);
 
@@ -673,7 +673,7 @@ public final class AvatarData {
 
    }
 
-   public static void d() {
+   public static void loadProvider() {
       DataInputStream var0;
       if ((var0 = loadRMS("avatarSV")) != null) {
          try {
@@ -687,7 +687,7 @@ public final class AvatarData {
 
    }
 
-   public static void e() {
+   public static void saveServerList() {
       ByteArrayOutputStream var0 = new ByteArrayOutputStream();
       DataOutputStream var1 = new DataOutputStream(var0);
 
@@ -714,7 +714,7 @@ public final class AvatarData {
 
    }
 
-   public static void f() {
+   public static void loadServerList() {
       DataInputStream var0;
       if ((var0 = loadRMS("avatarSV")) != null) {
          try {
@@ -805,7 +805,7 @@ public final class AvatarData {
          String var2;
          if ((var2 = GameMidlet.createhttpconnect(GameMidlet.linkGetHost[SERVER_INDEX][var1])) != null) {
             applyServerListText(var2, SERVER_INDEX);
-            e();
+            saveServerList();
             return true;
          }
       }

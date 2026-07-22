@@ -67,7 +67,7 @@ public final class OptionScr extends MyScreen {
             var2 = Canvas.w;
          }
 
-         PaintPopup.gI().a(T.option, var2 * AvMain.hd, var1, 1);
+         PaintPopup.gI().setup(T.option, var2 * AvMain.hd, var1, 1);
          if (Canvas.currentMyScreen != this) {
             for(var1 = 0; var1 < 3; ++var1) {
                this.isPaint[var1] = true;
@@ -106,7 +106,7 @@ public final class OptionScr extends MyScreen {
       }
 
       this.init();
-      SoundManager.a.a(var1 / 10);
+      SoundManager.instance.setVolume(var1 / 10);
    }
 
    public final void load() {
@@ -131,7 +131,7 @@ public final class OptionScr extends MyScreen {
          }
 
          this.init();
-         SoundManager.a.a(this.volume / 10);
+         SoundManager.instance.setVolume(this.volume / 10);
       }
 
    }
@@ -141,18 +141,18 @@ public final class OptionScr extends MyScreen {
          e = this.mapFocus[3] == 1;
       }
 
-      Canvas.a();
+      Canvas.initCommands();
    }
 
    public final void updateKey() {
       super.updateKey();
-      if (Canvas.a(2)) {
+      if (Canvas.isKeyPressed(2)) {
          this.setMapFocus_(-1);
-      } else if (Canvas.a(8)) {
+      } else if (Canvas.isKeyPressed(8)) {
          this.setMapFocus_(1);
-      } else if (Canvas.a(4)) {
+      } else if (Canvas.isKeyPressed(4)) {
          this.setMapFocus(-1);
-      } else if (Canvas.a(6)) {
+      } else if (Canvas.isKeyPressed(6)) {
          this.setMapFocus(1);
       }
 

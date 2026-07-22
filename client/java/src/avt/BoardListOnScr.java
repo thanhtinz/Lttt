@@ -33,7 +33,7 @@ public final class BoardListOnScr extends MyScreen {
    }
 
    public final void switchToMe() {
-      OnScreen.f();
+      OnScreen.disableVirtualKey();
       MyScreen.repaint();
       super.selected_ = 0;
       Canvas.paint.setValue(type);
@@ -246,7 +246,7 @@ public final class BoardListOnScr extends MyScreen {
 
    }
 
-   public final void a(Vector var1) {
+   public final void setBoardList(Vector var1) {
       this.boardList = var1;
    }
 

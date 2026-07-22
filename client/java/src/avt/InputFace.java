@@ -63,14 +63,14 @@ public final class InputFace extends Face {
       }
 
       boolean var2 = false;
-      if (Canvas.a(2)) {
+      if (Canvas.isKeyPressed(2)) {
          --this.focus;
          if (this.focus < 0) {
             this.focus = this.list.length - 1;
          }
 
          var2 = true;
-      } else if (Canvas.a(8)) {
+      } else if (Canvas.isKeyPressed(8)) {
          ++this.focus;
          if (this.focus > this.list.length - 1) {
             this.focus = 0;
@@ -92,7 +92,7 @@ public final class InputFace extends Face {
       }
 
       this.list[this.focus].setFocus(true);
-      super.right = this.list[this.focus].a();
+      super.right = this.list[this.focus].getRightCmd();
    }
 
    public final void keyPress(int var1) {

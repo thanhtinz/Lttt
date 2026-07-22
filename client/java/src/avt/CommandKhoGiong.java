@@ -11,6 +11,6 @@ final class CommandKhoGiong extends Command {
    }
 
    public final void paint(Graphics var1, int var2, int var3) {
-      FarmData.getTreeByID(this.f.ID).a(var1, 7, var2, var3, 3);
+      FarmData.getTreeByID(this.f.ID).paint(var1, 7, var2, var3, 3);
    }
 }

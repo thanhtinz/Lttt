@@ -39,7 +39,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
          Canvas.menuMain = null;
          HouseScr.me = null;
          MessageScr.me = null;
-         SoundManager.a.a();
+         SoundManager.instance.stop();
          if (ChatTextField.gI().left.action != null) {
             ChatTextField.gI().left.action.perform();
          }
@@ -55,7 +55,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
       Canvas.menuMain = null;
       HouseScr.me = null;
       MessageScr.me = null;
-      SoundManager.a.a();
+      SoundManager.instance.stop();
       if (ChatTextField.gI().left.action != null) {
          ChatTextField.gI().left.action.perform();
       }
@@ -372,12 +372,12 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
                   if (cityImg != null) {
                      fi = new FrameImage(cityImg, tilePx, tilePx);
                   } else {
-                     FilePack.b(T.aw);
+                     FilePack.init(T.aw);
                      fi = FrameImage.init("ct", tilePx, tilePx);
                      FilePack.reset();
                   }
                } else {
-                  FilePack.b(T.aw);
+                  FilePack.init(T.aw);
                   fi = FrameImage.init("ct", tilePx, tilePx);
                   FilePack.reset();
                }
@@ -646,7 +646,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
                }
 
                if (PopupShop.me != Canvas.currentMyScreen) {
-                  MapScr.gI().a(var94, var95, var96, var98);
+                  MapScr.gI().showActionMenu(var94, var95, var96, var98);
                }
 
                return;
@@ -803,12 +803,12 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
                var206 = var1.reader().readByte();
                byte[] var218 = new byte[var1.reader().available()];
                var1.reader().read(var218);
-               SoundManager.a.a(var218, var206);
+               SoundManager.instance.onSoundData(var218, var206);
                return;
             case -50:
                var204 = var1.reader().readUTF();
                var206 = var1.reader().readByte();
-               SoundManager.a.a(var204, var206);
+               SoundManager.instance.onRequestOpenSound(var204, var206);
                return;
             case -49:
                var206 = var1.reader().readByte();
@@ -965,7 +965,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
                }
 
                MoneyScr.gI().setAvatarList(var193);
-               MoneyScr.gI().a(Canvas.currentMyScreen);
+               MoneyScr.gI().showWithBack(Canvas.currentMyScreen);
                Canvas.endDlg();
                return;
             case -22:
@@ -1010,7 +1010,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
                   GameMidlet.avatar.lvMain = GameMidlet.myIndexP.g = var197.g = var1.reader().readShort();
                }
 
-               MapScr.gI().a(var2, var197, var195, var204, var211, var212, var10, var203, var11, var12);
+               MapScr.gI().updatePlayerInfo(var2, var197, var195, var204, var211, var212, var10, var203, var11, var12);
                return;
             case -21:
                Avatar var196;
@@ -1031,7 +1031,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
             case -17:
                GameMidlet.PROVIDER = var1.reader().readByte();
                GameMidlet.g = var1.reader().readUTF();
-               AvatarData.c();
+               AvatarData.saveProvider();
                break;
             case -12:
                var188 = var1.reader().readUTF();
@@ -1051,7 +1051,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
                Canvas.startOKDlg(var1.reader().readUTF());
                return;
             case -8:
-               Canvas.a(var1.reader().readUTF());
+               Canvas.showScrollInfo(var1.reader().readUTF());
                return;
             case -7:
                this.c.onVersion(var1.reader().readUTF(), var1.reader().readUTF());
@@ -1064,7 +1064,7 @@ public final class GlobalMessageHandler extends IService implements IMessageHand
                   ++MyScreen.nMsg;
                }
 
-               MessageScr.gI().a(var2, var190, var194);
+               MessageScr.gI().addPlayer(var2, var190, var194);
                return;
             case -1:
                GlobalLogicHandler.doGetHandler(var1.reader().readByte());

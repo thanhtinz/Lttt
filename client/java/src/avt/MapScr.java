@@ -803,7 +803,7 @@ public final class MapScr extends MyScreen implements IChatable {
          if (var0 < 2000000000) {
             MessageScr var10000 = MessageScr.gI();
             var1 = var2.name + ": " + var1;
-            var10000.a.a(var1);
+            var10000.publicTab.addText(var1);
          }
       }
 
@@ -953,10 +953,10 @@ public final class MapScr extends MyScreen implements IChatable {
 
    public final void onRequestAddFriend(Avatar var1, String var2) {
       UNK var3;
-      (var3 = new UNK(T.addFriend, -2, new Command(T.agree, new IActionAddFriend4(this, var1)), new Command(T.refused, new IActionAddFriend5(this, var1)), false)).a(var2);
+      (var3 = new UNK(T.addFriend, -2, new Command(T.agree, new IActionAddFriend4(this, var1)), new Command(T.refused, new IActionAddFriend5(this, var1)), false)).addText(var2);
       MessageScr var4 = MessageScr.gI();
       var3.a = true;
-      var4.b(var3);
+      var4.addTab(var3);
       if (Canvas.currentMyScreen != MessageScr.gI()) {
          ++MyScreen.nMsg;
       }
@@ -1113,13 +1113,13 @@ public final class MapScr extends MyScreen implements IChatable {
       return var4;
    }
 
-   private Command b(IndexPlayer var1) {
+   private Command createInfoCmd(IndexPlayer var1) {
       return new class_fk(this, (String)null, (IAction)null, var1);
    }
 
-   public final void a(IndexPlayer var1) {
+   public final void showMyInfo(IndexPlayer var1) {
       Vector var2;
-      (var2 = new Vector()).addElement(this.b(var1));
+      (var2 = new Vector()).addElement(this.createInfoCmd(var1));
       PopupShop.gI().isFull = true;
       PopupShop.gI().addElement(new String[]{T.mySeft}, new Vector[1], var2);
       if (Canvas.currentMyScreen != PopupShop.gI()) {
@@ -1128,7 +1128,7 @@ public final class MapScr extends MyScreen implements IChatable {
 
    }
 
-   public static void a(Graphics var0, String var1, int var2, int var3, int var4) {
+   public static void drawStatBar(Graphics var0, String var1, int var2, int var3, int var4) {
       var0.drawImage(imgBar, var2, var3 + 2, 17);
       int var5 = imgBar.getWidth() - 4 * AvMain.hd;
       int var6;
@@ -1154,21 +1154,21 @@ public final class MapScr extends MyScreen implements IChatable {
       return T.youFirstFire + ": " + Canvas.getMoneys(GameMidlet.avatar.money[0]) + T.dola;
    }
 
-   private static void f(int var0, int var1) {
+   private static void showStatChange(int var0, int var1) {
       if (var0 != var1) {
          Canvas.addFlyTextSmall((var1 - var0 > 0 ? "+" : "") + (var1 - var0), GameMidlet.avatar.x, GameMidlet.avatar.y - 40, -1, 0, -1);
       }
 
    }
 
-   public final void a(int var1, IndexPlayer var2, Avatar var3, String var4, short var5, byte var6, byte var7, String var8, short var9, String var10) {
+   public final void updatePlayerInfo(int var1, IndexPlayer var2, Avatar var3, String var4, short var5, byte var6, byte var7, String var8, short var9, String var10) {
       if (var1 == GameMidlet.avatar.IDDB) {
-         f(GameMidlet.myIndexP.g, var2.g);
-         f(GameMidlet.myIndexP.a, var2.a);
-         f(GameMidlet.myIndexP.b, var2.b);
-         f(GameMidlet.myIndexP.e, var2.e);
-         f(GameMidlet.myIndexP.c, var2.c);
-         f(GameMidlet.myIndexP.d, var2.d);
+         showStatChange(GameMidlet.myIndexP.g, var2.g);
+         showStatChange(GameMidlet.myIndexP.a, var2.a);
+         showStatChange(GameMidlet.myIndexP.b, var2.b);
+         showStatChange(GameMidlet.myIndexP.e, var2.e);
+         showStatChange(GameMidlet.myIndexP.c, var2.c);
+         showStatChange(GameMidlet.myIndexP.d, var2.d);
          GameMidlet.myIndexP = var2;
       }
 
@@ -1199,7 +1199,7 @@ public final class MapScr extends MyScreen implements IChatable {
          }
 
          if (GameMidlet.avatar.IDDB != ((Base)var20).IDDB) {
-            var13.addElement(this.b(var2));
+            var13.addElement(this.createInfoCmd(var2));
          }
 
          if (Canvas.currentMyScreen != MainMenu.me) {
@@ -1444,7 +1444,7 @@ public final class MapScr extends MyScreen implements IChatable {
 
    }
 
-   public final void a(int var1, int var2, String var3, String[] var4) {
+   public final void showActionMenu(int var1, int var2, String var3, String[] var4) {
       Vector var5 = new Vector();
 
       for(int var6 = 0; var6 < var4.length; ++var6) {
@@ -1573,7 +1573,7 @@ public final class MapScr extends MyScreen implements IChatable {
          } else {
             int var1 = 16 * AvMain.hd;
             LoadMap.idTileImg = -1;
-            FilePack.b(T.aw);
+            FilePack.init(T.aw);
             FrameImage var10 = FrameImage.init("ct", var1, var1);
             FilePack.reset();
             Vector var2 = new Vector();
@@ -1736,7 +1736,7 @@ public final class MapScr extends MyScreen implements IChatable {
       }
    }
 
-   public static void g(int var0) {
+   public static void showHomeMenu(int var0) {
       HouseScr.gI().typeHome = (byte)var0;
       if (GameMidlet.avatar.typeHome != var0 && GameMidlet.avatar.typeHome != -1) {
          HouseScr.gI().onRoadFriend();

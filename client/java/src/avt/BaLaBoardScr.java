@@ -158,7 +158,7 @@ public final class BaLaBoardScr extends BoardScr {
             }
          }
 
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             if (super.selectedCard >= 0 && super.selectedCard < this.myCards.size()) {
                Card card = (Card) this.myCards.elementAt(super.selectedCard);
                card.f = !card.f;
@@ -166,14 +166,14 @@ public final class BaLaBoardScr extends BoardScr {
             }
          }
 
-         if (Canvas.a(4)) {
+         if (Canvas.isKeyPressed(4)) {
             if (super.selectedCard > 0) {
                --super.selectedCard;
                this.setPosCard();
             }
          }
 
-         if (Canvas.a(6)) {
+         if (Canvas.isKeyPressed(6)) {
             if (super.selectedCard < this.myCards.size() - 1) {
                ++super.selectedCard;
                this.setPosCard();

@@ -185,7 +185,7 @@ public final class FarmScr extends MyScreen {
       isSteal = false;
       isAbleSteal = false;
       if (unk == null) {
-         FilePack.b(T.au);
+         FilePack.init(T.au);
          imgBuyLant = FilePack.getImage("buyLand");
          unk = FrameImage.init("cut", 24 * AvMain.hd, 24 * AvMain.hd);
          p = FrameImage.init("vp", 16 * AvMain.hd, 16 * AvMain.hd);
@@ -212,11 +212,11 @@ public final class FarmScr extends MyScreen {
       listFood[0] = new Vector();
       listFood[1] = new Vector();
       this.initCmd();
-      FilePack.b(T.au);
+      FilePack.init(T.au);
       imgFocusCel = FilePack.getImage("coin");
       u = FrameImage.init("iB", 9 * AvMain.hd, 13 * AvMain.hd);
       FilePack.reset();
-      this.r();
+      this.buildCareMenu();
       initImg();
       aS = new Command(T.finish, 8);
       aT = new Command(T.next, 9);
@@ -238,7 +238,7 @@ public final class FarmScr extends MyScreen {
       startMenuFarm(var1);
    }
 
-   private void r() {
+   private void buildCareMenu() {
       this.K.removeAllElements();
       this.K.addElement(new Command(T.farmQuickCare, CMD_FARM_QUICK_CARE));
       this.K.addElement(new Command(T.farmCrop, CMD_FARM_CROP));
@@ -1629,7 +1629,7 @@ public final class FarmScr extends MyScreen {
 
    }
 
-   public static void a(String var0) {
+   public static void showMoneyMenu(String var0) {
       Vector var1;
       (var1 = new Vector()).addElement(new Command(T.xu, 51));
       var1.addElement(new Command(T.gold, 52));
@@ -2651,7 +2651,7 @@ public final class FarmScr extends MyScreen {
 
       int var2;
       if (idSelected != -1) {
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             Canvas.keyHold[2] = false;
             if ((var2 = idSelected) % 12 % 4 != 0) {
                --var2;
@@ -2660,21 +2660,21 @@ public final class FarmScr extends MyScreen {
             if (var2 >= 0) {
                idSelected = var2;
             }
-         } else if (Canvas.a(4)) {
+         } else if (Canvas.isKeyPressed(4)) {
             Canvas.keyHold[4] = false;
             var2 = idSelected;
             var2 -= 4;
             if (var2 >= 0) {
                idSelected = var2;
             }
-         } else if (Canvas.a(6)) {
+         } else if (Canvas.isKeyPressed(6)) {
             Canvas.keyHold[6] = false;
             var2 = idSelected;
             var2 += 4;
             if (var2 < cell.size()) {
                idSelected = var2;
             }
-         } else if (Canvas.a(8)) {
+         } else if (Canvas.isKeyPressed(8)) {
             Canvas.keyHold[8] = false;
             if ((var2 = idSelected) % 12 % 4 != 3) {
                ++var2;
@@ -2683,7 +2683,7 @@ public final class FarmScr extends MyScreen {
             if (var2 < cell.size()) {
                idSelected = var2;
             }
-         } else if (Canvas.a(5)) {
+         } else if (Canvas.isKeyPressed(5)) {
             label274: {
                var2 = LoadMap.w;
                if ((var4 = (CellFarm)cell.elementAt(idSelected)).idTree != -1 && var4.statusTree < 6) {
@@ -2850,7 +2850,7 @@ public final class FarmScr extends MyScreen {
       LoadMap.paintEffectCamera(var1);
    }
 
-   public static void a(Vector var0, Vector var1, Vector var2, Vector var3, byte var4, int var5, boolean var6) {
+   public static void setShopItems(Vector var0, Vector var1, Vector var2, Vector var3, byte var4, int var5, boolean var6) {
       itemSeed = var0;
       isNew = var6;
       levelStore = var4;
@@ -3535,9 +3535,9 @@ public final class FarmScr extends MyScreen {
 
    }
 
-   public final void f(int var1, int var2) {
-      if (var2 != 3 && !PopupShop.h()) {
-         PopupShop.g();
+   public final void openBuyPopup(int var1, int var2) {
+      if (var2 != 3 && !PopupShop.isBuying()) {
+         PopupShop.startBuy();
          if (Canvas.isInitChar) {
             Canvas.welcome = new Welcome();
             if (Welcome.indexFarmPath > 2) {
@@ -3548,7 +3548,7 @@ public final class FarmScr extends MyScreen {
             return;
          }
       } else {
-         int var3 = PopupShop.f();
+         int var3 = PopupShop.getNumberPrice();
          int var4 = 0;
          int var5 = 0;
          if (var2 == 0) {
@@ -3620,7 +3620,7 @@ public final class FarmScr extends MyScreen {
             this.doFeeding();
             return;
          case 4:
-            this.r();
+            this.buildCareMenu();
             return;
          case 5:
             super.left = aP;
@@ -4045,7 +4045,7 @@ public final class FarmScr extends MyScreen {
       var0.setAction(var1, var2);
    }
 
-   static void a(FarmScr var0, CellFarm var1) {
+   static void confirmBreakTree(FarmScr var0, CellFarm var1) {
       if (var1.idTree != -1 && var1.statusTree < 6) {
          Canvas.startOKDlg(T.youWantBreakTree, 53);
       } else {
@@ -4055,11 +4055,11 @@ public final class FarmScr extends MyScreen {
 
    }
 
-   static void a(FarmScr var0, int var1, int var2) {
+   static void doPlantSeedAt(FarmScr var0, int var1, int var2) {
       doPlantSeed(var1, var2);
    }
 
-   static void a(FarmScr var0) {
+   static void openGieoHat(FarmScr var0) {
       var0.setGieoHat();
    }
 
@@ -4067,7 +4067,7 @@ public final class FarmScr extends MyScreen {
       return itemSeed;
    }
 
-   static void a(FarmScr var0, FarmItem var1, short var2, Animal var3) {
+   static void setActionAnimalAccess(FarmScr var0, FarmItem var1, short var2, Animal var3) {
       var0.setActionAnimal(var1, var2, var3);
    }
 }

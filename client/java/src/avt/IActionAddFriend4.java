@@ -10,14 +10,14 @@ final class IActionAddFriend4 implements IAction {
    }
 
    public final void perform() {
-      UNK var1 = MessageScr.gI().b(MessageScr.gI().b);
+      UNK var1 = MessageScr.gI().getTab(MessageScr.gI().currentTab);
       if (ListScr.friendL != null) {
          ListScr.gI();
          ListScr.removeList();
       }
 
       ParkService.gI().doAddFriend(this.a.IDDB, true);
-      MessageScr.gI().a(var1);
+      MessageScr.gI().removeTab(var1);
       Canvas.startOKDlg(T.addFriend + T.with + this.a.name + ".");
    }
 }

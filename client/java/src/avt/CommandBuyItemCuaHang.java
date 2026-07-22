@@ -12,7 +12,7 @@ final class CommandBuyItemCuaHang extends Command {
    }
 
    public final void paint(Graphics var1, int var2, int var3) {
-      FarmData.treeInfo[this.f].a(var1, 7, var2 + PopupShop.h / 2, var3 + PopupShop.h / 2, 3);
+      FarmData.treeInfo[this.f].paint(var1, 7, var2 + PopupShop.h / 2, var3 + PopupShop.h / 2, 3);
    }
 
    public final void update() {

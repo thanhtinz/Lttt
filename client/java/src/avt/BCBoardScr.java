@@ -518,7 +518,7 @@ public final class BCBoardScr extends BoardScr {
             }
          }
 
-         if (Canvas.a(6)) {
+         if (Canvas.isKeyPressed(6)) {
             ++this.V;
             if (this.V > 5) {
                this.V = 0;
@@ -527,7 +527,7 @@ public final class BCBoardScr extends BoardScr {
             return;
          }
 
-         if (Canvas.a(4)) {
+         if (Canvas.isKeyPressed(4)) {
             --this.V;
             if (this.V < 0) {
                this.V = 5;
@@ -536,12 +536,12 @@ public final class BCBoardScr extends BoardScr {
             return;
          }
 
-         if (Canvas.a(8)) {
+         if (Canvas.isKeyPressed(8)) {
             if (this.V / 3 <= 0) {
                this.V = (byte)(this.V + 3);
                return;
             }
-         } else if (Canvas.a(2) && this.V > 2) {
+         } else if (Canvas.isKeyPressed(2) && this.V > 2) {
             this.V = (byte)(this.V - 3);
          }
       }

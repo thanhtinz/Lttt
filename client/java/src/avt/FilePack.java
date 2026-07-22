@@ -93,7 +93,7 @@ public final class FilePack {
       return img;
    }
 
-   public static void b(String var0) {
+   public static void init(String var0) {
       try {
          instance = new FilePack(T.getPath() + var0);
       } catch (Throwable t) {

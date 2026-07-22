@@ -23,6 +23,6 @@ public final class PartFollow extends Part {
    public final void paintAvatar(Graphics var1, int var2, int var3, int var4, int var5) {
       APartInfo var6 = (APartInfo)AvatarData.getPart(super.follow);
       ImageInfo var7 = AvatarData.listImgInfo[var6.imgID[var2]];
-      AvatarData.a(var1, this.color, var7.x0, var7.y0, var7.w, var7.h, var3 + var6.dx[var2] * AvMain.hd - (var5 == Base.LEFT ? (var6.dx[var2] * AvMain.hd << 1) + var7.w * AvMain.hd : 0), var4 + var6.dy[var2] * AvMain.hd, var5, 0);
+      AvatarData.drawImgRegion(var1, this.color, var7.x0, var7.y0, var7.w, var7.h, var3 + var6.dx[var2] * AvMain.hd - (var5 == Base.LEFT ? (var6.dx[var2] * AvMain.hd << 1) + var7.w * AvMain.hd : 0), var4 + var6.dy[var2] * AvMain.hd, var5, 0);
    }
 }

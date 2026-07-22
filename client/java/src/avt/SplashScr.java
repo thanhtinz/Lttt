@@ -51,10 +51,10 @@ public final class SplashScr extends MyScreen {
             if (!LoginScr.isSelectedLanguage) {
                LoginScr.isSelectedLanguage = true;
                AvatarData.delErrorRms("avatarSV");
-               AvatarData.f();
+               AvatarData.loadServerList();
                selectedLanguage(0);
             } else {
-               AvatarData.f();
+               AvatarData.loadServerList();
                LoginScr.gI().initImg();
                if (ServerListScr.gI() != Canvas.currentMyScreen) {
                   LoginScr.gI().switchToMe();

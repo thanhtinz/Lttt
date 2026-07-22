@@ -14,6 +14,6 @@ final class IActionItem1 implements IAction {
    public final void perform() {
       HouseScr.setxTemp(this.a.me, HouseScr.getX(this.a.me));
       HouseScr.setYtemp(this.a.me, HouseScr.getY(this.a.me));
-      HouseScr.a(this.a.me, this.b, this.c);
+      HouseScr.buyMapItemAccess(this.a.me, this.b, this.c);
    }
 }

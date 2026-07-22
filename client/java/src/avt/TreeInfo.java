@@ -17,7 +17,7 @@ public final class TreeInfo {
    public boolean isDynamic = false;
    public byte lv = 1;
 
-   public final void a(Graphics var1, int var2, int var3, int var4, int var5) {
+   public final void paint(Graphics var1, int var2, int var3, int var4, int var5) {
       if (this.isDynamic) {
          FarmData.paintImg(var1, this.idImg[var2], var3, var4, var5);
       } else {

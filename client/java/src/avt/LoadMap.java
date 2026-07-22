@@ -71,7 +71,7 @@ public final class LoadMap {
       cmdNext = new Command(avt.T.next, new IActionNextFocus(this));
       star = CRes.rnd(3);
       w = 24;
-      FilePack.b(avt.T.av);
+      FilePack.init(avt.T.av);
       FilePack.getImage("den");
       imgShadow = FilePack.getImage("s0");
       if (Canvas.isKeyBoard) {
@@ -93,7 +93,7 @@ public final class LoadMap {
             return;
          }
 
-         if (Canvas.b(0, 0, Canvas.w, Canvas.h)) {
+         if (Canvas.isPointerInRect(0, 0, Canvas.w, Canvas.h)) {
             int var2 = Canvas.dx();
             int var3 = Canvas.dy();
             if (Canvas.isPointerClick) {
@@ -122,7 +122,7 @@ public final class LoadMap {
                      }
 
                      GameMidlet.avatar.posFocus = posFocus;
-                     GameMidlet.avatar.l();
+                     GameMidlet.avatar.moveToFocus();
                   }
                }
             }
@@ -177,7 +177,7 @@ public final class LoadMap {
 
          if (Canvas.gameTick % 4 == 2 && !FarmScr.isSelected && (TYPEMAP != 24 || Canvas.stypeInt == 0) && FarmScr.action == -1 && !FarmScr.isAutoVatNuoi && RaceScr.me != Canvas.currentMyScreen && TYPEMAP != -1 && Canvas.currentMyScreen != MainMenu.me && Canvas.menuMain == null) {
             if (focusObj == null) {
-               for(var12 = 0; var12 < playerLists.size() && !i(var12); ++var12) {
+               for(var12 = 0; var12 < playerLists.size() && !tryFocusObjectAt(var12); ++var12) {
                }
             } else if (CRes.abs(focusObj.x - GameMidlet.avatar.x) / w >= (focusObj.catagory == 7 ? wFocus << 1 : wFocus) || CRes.abs(focusObj.y - GameMidlet.avatar.y) / w >= (focusObj.catagory == 7 ? wFocus << 1 : wFocus)) {
                focusObj = null;
@@ -305,7 +305,7 @@ public final class LoadMap {
 
    }
 
-   public static void c() {
+   public static void focusNextObject() {
       if (focusObj != null) {
          isGo = false;
          int var0 = 0;
@@ -322,18 +322,18 @@ public final class LoadMap {
 
          focusObj = null;
 
-         for(var4 = var0 + 1; var4 < var1 && !i(var4); ++var4) {
+         for(var4 = var0 + 1; var4 < var1 && !tryFocusObjectAt(var4); ++var4) {
          }
 
          if (focusObj == null) {
-            for(var4 = 0; var4 <= var0 && !i(var4); ++var4) {
+            for(var4 = 0; var4 <= var0 && !tryFocusObjectAt(var4); ++var4) {
             }
          }
       }
 
    }
 
-   private static boolean i(int var0) {
+   private static boolean tryFocusObjectAt(int var0) {
       MyObject var1;
       if ((var1 = (MyObject)playerLists.elementAt(var0)).catagory != 4 && var1 != GameMidlet.avatar && var1.catagory != 6 && Math.abs(var1.x - GameMidlet.avatar.x) / w < (var1.catagory == 7 ? wFocus << 1 : wFocus) && Math.abs(var1.y - GameMidlet.avatar.y) / w < (var1.catagory == 7 ? wFocus << 1 : wFocus)) {
          if (var1.catagory != 0 || !((Avatar)var1).ableShow) {
@@ -362,7 +362,7 @@ public final class LoadMap {
       return var0 >= -125 && var0 < 0 ? true : var0 == 55 || var0 == 93 || var0 == 78 || var0 == 89 || var0 == 27 || var0 == 28 || var0 == 29 || var0 == 84 || var0 == 85 || var0 == 86 || var0 == 83 || var0 == 87 || var0 == 54 || var0 == 71 || var0 == 52 || var0 == 94 || var0 == 95 || var0 == 96 || var0 == 97 || var0 == 98 || var0 == 100 || var0 == 103 || var0 == 101 || var0 == 104 || var0 == 23;
    }
 
-   private void f() {
+   private void confirmExitToCity() {
       Canvas.startOKDlg(avt.T.doYouWantExit2, new IActionExitToCity(this));
    }
 
@@ -403,7 +403,7 @@ public final class LoadMap {
                ParkService.gI().doJoinPark(var3, -1);
                break;
             case 9:
-               this.f();
+               this.confirmExitToCity();
                break;
             case 10:
                Canvas.startWaitDlg();
@@ -412,10 +412,10 @@ public final class LoadMap {
                ParkService.gI().doJoinPark(10, -1);
                break;
             case 12:
-               this.f();
+               this.confirmExitToCity();
                break;
             case 17:
-               this.f();
+               this.confirmExitToCity();
                break;
             case 19:
                Canvas.startWaitDlg();
@@ -566,7 +566,7 @@ public final class LoadMap {
             case 69:
             case 70:
                MapScr.gI();
-               MapScr.g(var3 - 67);
+               MapScr.showHomeMenu(var3 - 67);
                break;
             case 71:
                Canvas.startWaitDlg();
@@ -953,7 +953,7 @@ public final class LoadMap {
          }
 
          rememBg = var3;
-         FilePack.b(avt.T.as);
+         FilePack.init(avt.T.as);
          Image var4 = FilePack.getImage(String.valueOf(var3) + status);
          Image var10 = FilePack.getImage(String.valueOf(status));
          Graphics var14 = (imgBG = Image.createImage(96 * AvMain.hd, 96 * AvMain.hd)).getGraphics();
@@ -2209,7 +2209,7 @@ public final class LoadMap {
             this.clound[var1] = new AvPosition(var2, var3);
          }
 
-         CRes.c();
+         CRes.computeCommandChecksum();
       }
 
    }

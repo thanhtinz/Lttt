@@ -61,7 +61,7 @@ public final class CasinoMsgHandler extends IService implements IMiniGameMsgHand
                }
 
                BoardListOnScr.gI().roomID = var15;
-               BoardListOnScr.gI().a(var18);
+               BoardListOnScr.gI().setBoardList(var18);
                BoardListOnScr.gI().switchToMe();
                BoardListOnScr.gI().init();
                Canvas.endDlg();
@@ -234,7 +234,7 @@ public final class CasinoMsgHandler extends IService implements IMiniGameMsgHand
                      PhomMsgHandler.onHandler();
                      break;
                   case 21:
-                     DiamondMessageHandler.a();
+                     DiamondMessageHandler.init();
                      break;
                   case 22:
                      BoardScr.numPlayer = 5;

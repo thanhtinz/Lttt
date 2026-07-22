@@ -76,7 +76,7 @@ public final class FishingScr extends MyScreen {
       this.cmdClose = new Command(T.close, 2);
       this.cmdSetting = new Command(T.option, 3);
       super.center = this.cmdQuanCau;
-      FilePack.b(T.av);
+      FilePack.init(T.av);
       this.imgPhao = FilePack.getImage("cucphao");
       this.imgCa = FrameImage.init("ca", 14 * AvMain.hd, 14 * AvMain.hd);
       FilePack.reset();
@@ -453,13 +453,13 @@ public final class FishingScr extends MyScreen {
 
    public final void updateKey() {
       if (this.fish.isCanCau && !this.fish.isSuccess) {
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             this.setIndex(2);
-         } else if (Canvas.a(4)) {
+         } else if (Canvas.isKeyPressed(4)) {
             this.setIndex(1);
-         } else if (Canvas.a(6)) {
+         } else if (Canvas.isKeyPressed(6)) {
             this.setIndex(3);
-         } else if (Canvas.a(8)) {
+         } else if (Canvas.isKeyPressed(8)) {
             this.setIndex(4);
          }
       }

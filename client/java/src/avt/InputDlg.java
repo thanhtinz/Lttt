@@ -123,7 +123,7 @@ public final class InputDlg extends Dialog {
    public final void updateKey() {
       this.tfInput.update();
       if (this.tfInput.isFocused()) {
-         super.right = this.tfInput.a();
+         super.right = this.tfInput.getRightCmd();
       }
 
       if (OnScreen.isOngame && Canvas.stypeInt != 0) {

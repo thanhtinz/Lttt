@@ -34,7 +34,7 @@ public final class CellFarm extends SubObject {
 
          if (this.idTree != -1) {
             TreeInfo var4;
-            (var4 = FarmData.getTreeByID(this.idTree)).a(var1, this.statusTree, super.x * MyObject.hd, super.y * MyObject.hd, 33);
+            (var4 = FarmData.getTreeByID(this.idTree)).paint(var1, this.statusTree, super.x * MyObject.hd, super.y * MyObject.hd, 33);
             int var5 = var4.harvestTime * 60 + var4.dieTime * 60;
             if ((this.time <= var5 || var4.dieTime == -1) && this.hervestPer != 100 && this.time >= 0) {
                if (this.isGrass) {
@@ -53,7 +53,7 @@ public final class CellFarm extends SubObject {
                      var3 = this.yCell * 24 * MyObject.hd;
                   }
 
-                  var4.a(var1, 7, var2 - 3, var3 - 40 * MyObject.hd, 33);
+                  var4.paint(var1, 7, var2 - 3, var3 - 40 * MyObject.hd, 33);
                   var1.setColor(1);
                   var1.fillRect(var2 - 4 * MyObject.hd, var3 - 38 * MyObject.hd, 31 * MyObject.hd, 5 * MyObject.hd);
                   var1.setColor(65280);

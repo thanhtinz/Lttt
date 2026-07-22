@@ -20,7 +20,7 @@ public final class Bus {
 
    public final void setBus(byte var1) {
       if (!isRun && GameMidlet.avatar.action != -1) {
-         FilePack.b(T.at);
+         FilePack.init(T.at);
          this.imgBus = FilePack.getImage("839");
          FilePack.reset();
          direct = var1;

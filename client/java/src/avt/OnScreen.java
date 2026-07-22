@@ -58,7 +58,7 @@ public final class OnScreen extends MyScreen {
       Canvas.menuMain = null;
       Canvas.endDlg();
       if (l == null) {
-         FilePack.b(T.aw);
+         FilePack.init(T.aw);
          FrameImage.init("iconGame", 13 * AvMain.hd, 11 * AvMain.hd);
          FilePack.reset();
 
@@ -97,7 +97,7 @@ public final class OnScreen extends MyScreen {
          q = 0;
       }
 
-      g();
+      updateLayout();
       if (Canvas.load == 0) {
          Canvas.load = 1;
       }
@@ -106,7 +106,7 @@ public final class OnScreen extends MyScreen {
       isOngame = true;
    }
 
-   private static void g() {
+   private static void updateLayout() {
       Canvas.hTab = MyScreen.hText;
       if (Canvas.stypeInt == 0) {
          Canvas.hTab = AvMain.hBorder + 5;
@@ -157,7 +157,7 @@ public final class OnScreen extends MyScreen {
             Canvas.startWaitDlg();
             return;
          case 3:
-            this.h();
+            this.performDelayedAction();
          default:
       }
    }
@@ -176,7 +176,7 @@ public final class OnScreen extends MyScreen {
       this.commandTab(1, -1);
    }
 
-   private void h() {
+   private void performDelayedAction() {
       r = true;
       this.d.perform();
    }
@@ -185,7 +185,7 @@ public final class OnScreen extends MyScreen {
       if (this.w > 0) {
          --this.w;
          if (this.w == 0 && Canvas.currentMyScreen != PopupShop.me) {
-            this.h();
+            this.performDelayedAction();
          }
       }
 
@@ -235,26 +235,26 @@ public final class OnScreen extends MyScreen {
 
    public final void updateKey() {
       ++this.x;
-      if (Canvas.a(4)) {
+      if (Canvas.isKeyPressed(4)) {
          if (this.e % this.j > 0) {
             --this.e;
          }
-      } else if (Canvas.a(6)) {
+      } else if (Canvas.isKeyPressed(6)) {
          if (this.e < l.nFrame - 1 && this.e % this.j < this.j - 1) {
             ++this.e;
          }
-      } else if (Canvas.a(2)) {
+      } else if (Canvas.isKeyPressed(2)) {
          if (this.e / this.j > 0) {
             this.e -= this.j;
          }
-      } else if (Canvas.a(8) && this.e / this.j < l.nFrame / this.j && this.e + this.j < l.nFrame) {
+      } else if (Canvas.isKeyPressed(8) && this.e / this.j < l.nFrame / this.j && this.e + this.j < l.nFrame) {
          this.e += this.j;
       }
 
       int var1;
       if (Canvas.isPointerClick) {
          for(var1 = 0; var1 < T.selectLanguage.length; ++var1) {
-            if (Canvas.b(this.f + var1 % this.j * this.h - this.k / 2, this.g + var1 / this.j * this.i - this.k / 2, this.k, this.k + AvMain.hNormal + 10)) {
+            if (Canvas.isPointerInRect(this.f + var1 % this.j * this.h - this.k / 2, this.g + var1 / this.j * this.i - this.k / 2, this.k, this.k + AvMain.hNormal + 10)) {
                this.B = Canvas.pxLast;
                this.y = this.x;
                this.t = n;
@@ -321,7 +321,7 @@ public final class OnScreen extends MyScreen {
                   this.w = 5;
                   r = false;
                } else if (!r) {
-                  this.h();
+                  this.performDelayedAction();
                }
             }
 
@@ -380,12 +380,12 @@ public final class OnScreen extends MyScreen {
 
    }
 
-   public static void f() {
+   public static void disableVirtualKey() {
       if (isOngame && OptionScr.isVirTualKey) {
          OptionScr.isVirTualKey = false;
          OptionScr.gI().mapFocus[4] = 0;
          Canvas.instance.setSize();
-         g();
+         updateLayout();
       }
 
    }

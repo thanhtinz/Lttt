@@ -32,7 +32,7 @@ public final class MoneyScr extends MyScreen {
       return instance;
    }
 
-   public final void a(MyScreen var1) {
+   public final void showWithBack(MyScreen var1) {
       this.init();
       this.focusTap = 0;
       super.selected_ = 0;
@@ -43,7 +43,7 @@ public final class MoneyScr extends MyScreen {
 
    public final void init() {
       if (this.imgSell == null) {
-         FilePack.b(T.au);
+         FilePack.init(T.au);
          this.imgSell = FilePack.getImage("coin");
          FilePack.reset();
       }
@@ -60,7 +60,7 @@ public final class MoneyScr extends MyScreen {
       }
 
       this.initPos();
-      PaintPopup.gI().a(var1, this.w, this.h, 2);
+      PaintPopup.gI().setup(var1, this.w, this.h, 2);
       if (OnScreen.isOngame) {
          PaintPopup.gI().y = 25 + MyScreen.ITEM_HEIGHT + 1;
       }

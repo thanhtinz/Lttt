@@ -69,7 +69,7 @@ public final class CustomTab extends Face {
       this.h = Canvas.h - Canvas.hTab - 20;
    }
 
-   public final void d() {
+   public final void refresh() {
       this.setSize();
       this.setInfo(this.listImg, this.title, this.strTemp, this.idAction);
    }

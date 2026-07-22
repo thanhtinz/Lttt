@@ -13,7 +13,7 @@ final class IActionDisconnect implements IAction {
       Session_ME.gI().close();
       LoginScr.gI().switchToMe();
       Canvas.menuMain = null;
-      SoundManager.a.a();
+      SoundManager.instance.stop();
       FarmData.init();
       ClientUtilities.onFishingAutoDisconnected();
    }

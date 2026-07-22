@@ -8,8 +8,8 @@ final class IActionAddFriend5 implements IAction {
    }
 
    public final void perform() {
-      UNK var1 = MessageScr.gI().b(MessageScr.gI().b);
+      UNK var1 = MessageScr.gI().getTab(MessageScr.gI().currentTab);
       ParkService.gI().doAddFriend(this.a.IDDB, false);
-      MessageScr.gI().a(var1);
+      MessageScr.gI().removeTab(var1);
    }
 }

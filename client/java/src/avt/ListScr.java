@@ -44,7 +44,7 @@ public final class ListScr extends MyScreen {
          this.backMyScreen = Canvas.currentMyScreen;
       }
 
-      this.f();
+      this.setupPopupBox();
       super.switchToMe();
       if (Canvas.stypeInt > 0) {
          this.isHide = true;
@@ -60,11 +60,11 @@ public final class ListScr extends MyScreen {
 
    }
 
-   public final void f() {
+   public final void setupPopupBox() {
       if (Canvas.stypeInt == 0) {
-         PaintPopup.gI().a(this.name, Canvas.w - 20, Canvas.hCan - Canvas.hTab - 20, 1);
+         PaintPopup.gI().setup(this.name, Canvas.w - 20, Canvas.hCan - Canvas.hTab - 20, 1);
       } else {
-         PaintPopup.gI().a(this.name, Canvas.w - 20 * AvMain.hd, Canvas.h - Canvas.ab - Canvas.hTab - 10 + (OnScreen.isOngame ? 7 * AvMain.hd : 0), 1);
+         PaintPopup.gI().setup(this.name, Canvas.w - 20 * AvMain.hd, Canvas.h - Canvas.ab - Canvas.hTab - 10 + (OnScreen.isOngame ? 7 * AvMain.hd : 0), 1);
       }
 
       PaintPopup.gI().y = 10 + Canvas.ab;
@@ -397,7 +397,7 @@ public final class ListScr extends MyScreen {
 
          gI().onList(this.focus, var10, Canvas.currentMyScreen);
          this.name = var5;
-         this.f();
+         this.setupPopupBox();
          if (Canvas.currentMyScreen != this) {
             this.switchToMe();
          }
@@ -466,7 +466,7 @@ public final class ListScr extends MyScreen {
 
    }
 
-   public final void g() {
+   public final void initSelectCmd() {
       this.cmdSelected = new Command(T.selectt, 3);
       if (Canvas.stypeInt == 0) {
          super.center = this.cmdSelected;

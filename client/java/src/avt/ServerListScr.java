@@ -37,7 +37,7 @@ public final class ServerListScr extends MyScreen {
          AvatarData.refreshServerListFromHost();
       }
       super.switchToMe();
-      this.e();
+      this.setupPopupBox();
       this.indexUSer = 0;
       if (super.center == null) {
          this.initCmd();
@@ -47,11 +47,11 @@ public final class ServerListScr extends MyScreen {
    }
 
    public ServerListScr() {
-      FilePack.b(T.av);
+      FilePack.init(T.av);
       this.img = FilePack.getImage("tp");
       FilePack.reset();
       this.initCmd();
-      CRes.b();
+      CRes.loadSavedData();
    }
 
    public final void commandTab(int var1, int var2) {
@@ -65,7 +65,7 @@ public final class ServerListScr extends MyScreen {
             } else {
                if (!this.isSelected) {
                   this.isSelected = true;
-                  this.e();
+                  this.setupPopupBox();
                   super.selected_ = 1 + CRes.rnd(GameMidlet.nameSV[AvatarData.SERVER_INDEX][this.indexSV].length - 1);
                   this.chans();
                   return;
@@ -114,9 +114,9 @@ public final class ServerListScr extends MyScreen {
          if ((var1 = GameMidlet.createhttpconnect(GameMidlet.linkGetHost[AvatarData.SERVER_INDEX][this.indexUSer])) != null) {
             AvatarData.ensureServerArraySize();
             AvatarData.applyServerListText(var1, AvatarData.SERVER_INDEX);
-            AvatarData.e();
+            AvatarData.saveServerList();
             Canvas.endDlg();
-            this.e();
+            this.setupPopupBox();
             return;
          }
 
@@ -124,7 +124,7 @@ public final class ServerListScr extends MyScreen {
       }
    }
 
-   public final void e() {
+   public final void setupPopupBox() {
       if (Canvas.stypeInt > 0) {
          super.isHide_ = true;
       }
@@ -134,7 +134,7 @@ public final class ServerListScr extends MyScreen {
          var1 = Canvas.w;
       }
 
-      PaintPopup.gI().a(T.cloth, var1 * AvMain.hd, MyScreen.hText * 6, 1);
+      PaintPopup.gI().setup(T.cloth, var1 * AvMain.hd, MyScreen.hText * 6, 1);
       x = PaintPopup.gI().x + 4;
       y = PaintPopup.gI().y + PaintPopup.hTab + AvMain.hDuBox;
       hDis = PaintPopup.gI().h - (PaintPopup.hTab + (AvMain.hDuBox << 1));
@@ -217,7 +217,7 @@ public final class ServerListScr extends MyScreen {
          super.selected_ = 0;
          if (var2) {
             this.isSelected = false;
-            this.e();
+            this.setupPopupBox();
          }
       }
 
@@ -226,14 +226,14 @@ public final class ServerListScr extends MyScreen {
    public final void updateKey() {
       ++this.count;
       boolean var1 = false;
-      if (Canvas.a(8)) {
+      if (Canvas.isKeyPressed(8)) {
          var1 = true;
          if (!this.isSelected) {
             this.setIndex(this.indexSV + 1);
          } else {
             this.setSelected(super.selected_ + 1, true);
          }
-      } else if (Canvas.a(2)) {
+      } else if (Canvas.isKeyPressed(2)) {
          var1 = true;
          if (!this.isSelected) {
             this.setIndex(this.indexSV - 1);
@@ -242,7 +242,7 @@ public final class ServerListScr extends MyScreen {
          }
       }
 
-      if (Canvas.isPointerClick && Canvas.b(x, y, PaintPopup.gI().w, hDis)) {
+      if (Canvas.isPointerClick && Canvas.isPointerInRect(x, y, PaintPopup.gI().w, hDis)) {
          Canvas.isPointerClick = false;
          this.pa = cmy;
          this.transY = true;
@@ -280,7 +280,7 @@ public final class ServerListScr extends MyScreen {
             cmy = cmtoY;
          }
 
-         if (Canvas.isPointerRelease && Canvas.b(x, y, PaintPopup.gI().w, hDis)) {
+         if (Canvas.isPointerRelease && Canvas.isPointerInRect(x, y, PaintPopup.gI().w, hDis)) {
             var5 = (int)(this.count - this.timePoint);
             int var6;
             if (CRes.abs(var6 = this.t - Canvas.py) > 40 && var5 < 10 && cmtoY > 0 && cmtoY < cmyLim) {

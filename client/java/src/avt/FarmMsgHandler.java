@@ -155,8 +155,8 @@ public final class FarmMsgHandler extends IService implements IMiniGameMsgHandle
                }
 
                FarmScr.gI();
-               FarmScr.a(var93, var100, var91, var103, (byte)var86, var105, var9);
-               if (FarmData.playing == 0 && a() && LoadMap.TYPEMAP != 25) {
+               FarmScr.setShopItems(var93, var100, var91, var103, (byte)var86, var105, var9);
+               if (FarmData.playing == 0 && isFarmPlayable() && LoadMap.TYPEMAP != 25) {
                   FarmData.saveVersion();
                   ParkService.gI().doJoinPark(25, 0);
                   FarmScr.initImg();
@@ -217,7 +217,7 @@ public final class FarmMsgHandler extends IService implements IMiniGameMsgHandle
                return;
             case 69:
                FarmScr.gI();
-               FarmScr.a(var1.reader().readUTF());
+               FarmScr.showMoneyMenu(var1.reader().readUTF());
                return;
             case 70:
                var2 = var1.reader().readInt();
@@ -272,7 +272,7 @@ public final class FarmMsgHandler extends IService implements IMiniGameMsgHandle
                GlobalMessageHandler.readChat(var1);
                return;
             case 78:
-               if (a()) {
+               if (isFarmPlayable()) {
                   return;
                }
 
@@ -283,7 +283,7 @@ public final class FarmMsgHandler extends IService implements IMiniGameMsgHandle
                FarmScr.gI().setInfoCell(var2);
                return;
             case 79:
-               if (a()) {
+               if (isFarmPlayable()) {
                   return;
                }
 
@@ -483,7 +483,7 @@ public final class FarmMsgHandler extends IService implements IMiniGameMsgHandle
 
    }
 
-   private static boolean a() {
+   private static boolean isFarmPlayable() {
       return LoadMap.TYPEMAP != 24 && LoadMap.TYPEMAP != 53;
    }
 

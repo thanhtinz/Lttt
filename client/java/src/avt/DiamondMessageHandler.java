@@ -6,7 +6,7 @@ import main.Canvas;
 public final class DiamondMessageHandler extends IService implements IMiniGameMsgHandler {
    private static DiamondMessageHandler instance = new DiamondMessageHandler();
 
-   public static void a() {
+   public static void init() {
       BoardScr.numPlayer = 2;
       BoardListOnScr.type = 0;
       RoomListOnScr.setName(2, DiamondScr.gI());

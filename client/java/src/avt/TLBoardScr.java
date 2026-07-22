@@ -330,13 +330,13 @@ public final class TLBoardScr extends BoardScr {
             }
          }
 
-         if (Canvas.a(6)) {
+         if (Canvas.isKeyPressed(6)) {
             this.moveSelect(1);
-         } else if (Canvas.a(4)) {
+         } else if (Canvas.isKeyPressed(4)) {
             this.moveSelect(-1);
          }
 
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             if (this.selectedCard_ != -1) {
                this.selectedCard_ = -1;
                this.setPosCard(true);
@@ -347,7 +347,7 @@ public final class TLBoardScr extends BoardScr {
             this.setPosCard(true);
          }
 
-         if (Canvas.a(8)) {
+         if (Canvas.isKeyPressed(8)) {
             if (((Card)this.cards.elementAt(super.selectedCard)).f) {
                this.doSelect();
                this.setPosCard(true);

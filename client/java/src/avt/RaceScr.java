@@ -446,7 +446,7 @@ public final class RaceScr extends MyScreen implements IChatable {
          super.updateKey();
       }
 
-      if (Canvas.a(2)) {
+      if (Canvas.isKeyPressed(2)) {
          if (this.isDC) {
             if (this.indexDC / 3 > 0) {
                this.indexDC -= 3;
@@ -457,7 +457,7 @@ public final class RaceScr extends MyScreen implements IChatable {
                this.indexMoney = 0;
             }
          }
-      } else if (Canvas.a(8)) {
+      } else if (Canvas.isKeyPressed(8)) {
          if (this.isDC) {
             if (this.indexDC / 3 < 2) {
                this.indexDC += 3;
@@ -468,25 +468,25 @@ public final class RaceScr extends MyScreen implements IChatable {
                this.indexMoney = 5;
             }
          }
-      } else if (Canvas.a(4)) {
+      } else if (Canvas.isKeyPressed(4)) {
          if (this.isDC && this.indexDC % 3 > 0) {
             --this.indexDC;
          }
-      } else if (Canvas.a(6) && this.isDC && this.indexDC % 3 < 2) {
+      } else if (Canvas.isKeyPressed(6) && this.isDC && this.indexDC % 3 < 2) {
          ++this.indexDC;
       }
 
       if (Canvas.isPointerClick && this.listPet != null && !this.isStart && this.isRace) {
          int var1;
          if (this.isDC) {
-            if (Canvas.b(this.xSelectDC + this.wSelectDC - 30 * AvMain.hd, this.ySelectDC, 30 * AvMain.hd, 30 * AvMain.hd)) {
+            if (Canvas.isPointerInRect(this.xSelectDC + this.wSelectDC - 30 * AvMain.hd, this.ySelectDC, 30 * AvMain.hd, 30 * AvMain.hd)) {
                Canvas.isPointerClick = false;
                this.countCloseDC = 5;
                this.isTran = true;
                this.timeDelay = this.count;
             } else {
                for(var1 = 0; var1 < 9; ++var1) {
-                  if (Canvas.b(this.xSelectDC + 5 * AvMain.hd + var1 % 3 * (5 * AvMain.hd + this.imgBackMoney.frameWidth), this.ySelectDC + (this.hSelectDC - 29 * AvMain.hd * 3) + var1 / 3 * 29 * AvMain.hd - 1 * AvMain.hd, 60 * AvMain.hd, 26 * AvMain.hd)) {
+                  if (Canvas.isPointerInRect(this.xSelectDC + 5 * AvMain.hd + var1 % 3 * (5 * AvMain.hd + this.imgBackMoney.frameWidth), this.ySelectDC + (this.hSelectDC - 29 * AvMain.hd * 3) + var1 / 3 * 29 * AvMain.hd - 1 * AvMain.hd, 60 * AvMain.hd, 26 * AvMain.hd)) {
                      this.indexDC = var1;
                      Canvas.isPointerClick = false;
                      this.isTran = true;
@@ -497,7 +497,7 @@ public final class RaceScr extends MyScreen implements IChatable {
             }
          } else {
             for(var1 = 0; var1 < 6; ++var1) {
-               if (Canvas.b(this.xPopup + this.xDC + 32 * AvMain.hd / 2 - 15 * AvMain.hd, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * var1 + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 31 * AvMain.hd, 31 * AvMain.hd)) {
+               if (Canvas.isPointerInRect(this.xPopup + this.xDC + 32 * AvMain.hd / 2 - 15 * AvMain.hd, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * var1 + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 31 * AvMain.hd, 31 * AvMain.hd)) {
                   this.indexPet = var1;
                   this.isTran = true;
                   Canvas.isPointerClick = false;
@@ -505,7 +505,7 @@ public final class RaceScr extends MyScreen implements IChatable {
                   break;
                }
 
-               if (Canvas.b(this.xPopup + this.xDC + this.wDC - 1 * AvMain.hd - this.imgBackMoney.frameWidth, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * var1 + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 60 * AvMain.hd, 31 * AvMain.hd)) {
+               if (Canvas.isPointerInRect(this.xPopup + this.xDC + this.wDC - 1 * AvMain.hd - this.imgBackMoney.frameWidth, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * var1 + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 60 * AvMain.hd, 31 * AvMain.hd)) {
                   this.indexMoney = var1;
                   this.isTran = true;
                   Canvas.isPointerClick = false;
@@ -519,18 +519,18 @@ public final class RaceScr extends MyScreen implements IChatable {
       if (this.isTran) {
          if (Canvas.isPointerDown) {
             if (this.indexDC != -1) {
-               if (!Canvas.b(this.xSelectDC + 5 * AvMain.hd + this.indexDC % 3 * (5 * AvMain.hd + this.imgBackMoney.frameWidth), this.ySelectDC + (this.hSelectDC - 29 * AvMain.hd * 3) + this.indexDC / 3 * 29 * AvMain.hd - 1 * AvMain.hd, 60 * AvMain.hd, 26 * AvMain.hd)) {
+               if (!Canvas.isPointerInRect(this.xSelectDC + 5 * AvMain.hd + this.indexDC % 3 * (5 * AvMain.hd + this.imgBackMoney.frameWidth), this.ySelectDC + (this.hSelectDC - 29 * AvMain.hd * 3) + this.indexDC / 3 * 29 * AvMain.hd - 1 * AvMain.hd, 60 * AvMain.hd, 26 * AvMain.hd)) {
                   this.indexDC = -1;
                }
             } else if (this.countCloseDC != 0) {
-               if (!Canvas.b(this.xSelectDC + this.wSelectDC - 30 * AvMain.hd, this.ySelectDC, 30 * AvMain.hd, 30 * AvMain.hd)) {
+               if (!Canvas.isPointerInRect(this.xSelectDC + this.wSelectDC - 30 * AvMain.hd, this.ySelectDC, 30 * AvMain.hd, 30 * AvMain.hd)) {
                   this.countCloseDC = 0;
                }
             } else if (this.indexPet != -1) {
-               if (!Canvas.b(this.xPopup + this.xDC + 32 * AvMain.hd / 2 - 15 * AvMain.hd, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * this.indexPet + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 31 * AvMain.hd, 31 * AvMain.hd)) {
+               if (!Canvas.isPointerInRect(this.xPopup + this.xDC + 32 * AvMain.hd / 2 - 15 * AvMain.hd, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * this.indexPet + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 31 * AvMain.hd, 31 * AvMain.hd)) {
                   this.indexPet = -1;
                }
-            } else if (this.indexMoney != -1 && !this.isDC && !Canvas.b(this.xPopup + this.xDC + this.wDC - 1 * AvMain.hd - this.imgBackMoney.frameWidth, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * this.indexMoney + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 60 * AvMain.hd, 31 * AvMain.hd)) {
+            } else if (this.indexMoney != -1 && !this.isDC && !Canvas.isPointerInRect(this.xPopup + this.xDC + this.wDC - 1 * AvMain.hd - this.imgBackMoney.frameWidth, this.yPopup + this.yDC + 3 * AvMain.hd + 35 * AvMain.hd * this.indexMoney + 31 * AvMain.hd / 2 - 15 * AvMain.hd, 60 * AvMain.hd, 31 * AvMain.hd)) {
                this.indexMoney = -1;
             }
          }

@@ -15,6 +15,6 @@ final class IActionSet1 implements IAction {
       GameMidlet.avatar.action = 0;
       FarmScr.focusCell.x = this.b.x / LoadMap.w;
       FarmScr.focusCell.y = this.b.y / LoadMap.w;
-      FarmScr.a(this.a, this.b);
+      FarmScr.confirmBreakTree(this.a, this.b);
    }
 }

@@ -54,19 +54,19 @@ public final class HouseScr extends MyScreen implements IChatable {
 
    public final void switchToMe() {
       super.switchToMe();
-      this.i();
+      this.updateSelectCmd();
    }
 
    public HouseScr() {
       this.cmdBrick = new Command(T.sett, 0);
       this.cmdFinish = new Command(T.finish, 1);
       this.cmdMenu = new Command(T.menu, 2);
-      FilePack.b(T.av);
+      FilePack.init(T.av);
       this.imgBuyItem = FilePack.getImage("hand");
       FilePack.reset();
    }
 
-   private void i() {
+   private void updateSelectCmd() {
       if (this.idHouse == GameMidlet.avatar.IDDB) {
          super.center = MapScr.gI().e;
          super.center.caption = T.selectt;
@@ -155,7 +155,7 @@ public final class HouseScr extends MyScreen implements IChatable {
       this.selected = -1;
       isChange = false;
       isSelectObj = false;
-      this.i();
+      this.updateSelectCmd();
       super.right = null;
       if (LoadMap.getAvatar(GameMidlet.avatar.IDDB) == null) {
          this.addPlayer();
@@ -270,7 +270,7 @@ public final class HouseScr extends MyScreen implements IChatable {
          GameMidlet.avatar.updateKey();
       } else {
          boolean var1 = false;
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             if (!setCollision(this.x, this.y - 1)) {
                --this.y;
             }
@@ -280,7 +280,7 @@ public final class HouseScr extends MyScreen implements IChatable {
             }
 
             var1 = true;
-         } else if (Canvas.a(4)) {
+         } else if (Canvas.isKeyPressed(4)) {
             if (!setCollision(this.x - 1, this.y)) {
                --this.x;
             }
@@ -291,7 +291,7 @@ public final class HouseScr extends MyScreen implements IChatable {
 
             var1 = true;
             GameMidlet.avatar.direct = Base.LEFT;
-         } else if (Canvas.a(6)) {
+         } else if (Canvas.isKeyPressed(6)) {
             if (!setCollision(this.x + 1, this.y)) {
                ++this.x;
             }
@@ -302,7 +302,7 @@ public final class HouseScr extends MyScreen implements IChatable {
 
             var1 = true;
             GameMidlet.avatar.direct = 0;
-         } else if (Canvas.a(8)) {
+         } else if (Canvas.isKeyPressed(8)) {
             if (!setCollision(this.x, this.y + 1)) {
                ++this.y;
             }
@@ -675,7 +675,7 @@ public final class HouseScr extends MyScreen implements IChatable {
 
             this.addPlayer();
             isChange = false;
-            this.i();
+            this.updateSelectCmd();
             super.right = null;
             return;
          case 2:
@@ -942,7 +942,7 @@ public final class HouseScr extends MyScreen implements IChatable {
             ListScr.gI().switchToMe();
             ListScr.tempList = var1;
             ListScr.gI().setCam();
-            ListScr.gI().g();
+            ListScr.gI().initSelectCmd();
          }
       }
 
@@ -1247,7 +1247,7 @@ public final class HouseScr extends MyScreen implements IChatable {
       var0.yTemp = var1;
    }
 
-   static void a(HouseScr var0, int var1, String var2) {
+   static void buyMapItemAccess(HouseScr var0, int var1, String var2) {
       MapItemType var3 = (MapItemType)AvatarData.listMapItemType.elementAt(var1);
       if (!var0.isDisable(var3)) {
          Canvas.getTypeMoney(var3.priceXu, var3.priceLuong, new IActionBuyItem(var0, var3, var2), new IActionBuyItem1(var0, var3, var2), new IActionBuyItemClose1(var0));
@@ -1255,11 +1255,11 @@ public final class HouseScr extends MyScreen implements IChatable {
 
    }
 
-   static void f(HouseScr var0) {
+   static void doSelectObjectAccess(HouseScr var0) {
       var0.doSelectObject();
    }
 
-   static boolean a(HouseScr var0, MapItemType var1) {
+   static boolean isDisableAccess(HouseScr var0, MapItemType var1) {
       return var0.isDisable(var1);
    }
 

@@ -68,7 +68,7 @@ public final class RegisterScr extends MyScreen {
       GameMidlet.avatar.addSeri(var1);
       GameMidlet.avatar.addSeri(new SeriPart((short)0));
       GameMidlet.avatar.orderSeriesPath();
-      PaintPopup.gI().a(T.createChar, 150 * AvMain.hd, 170 + (AvMain.hd == 2 ? 120 : 0), 1);
+      PaintPopup.gI().setup(T.createChar, 150 * AvMain.hd, 170 + (AvMain.hd == 2 ? 120 : 0), 1);
       super.switchToMe();
    }
 

@@ -33,7 +33,7 @@ final class Sender implements Runnable {
 
    }
 
-   static Vector a(Sender var0) {
+   static Vector getSendingMessage(Sender var0) {
       return var0.sendingMessage;
    }
 }

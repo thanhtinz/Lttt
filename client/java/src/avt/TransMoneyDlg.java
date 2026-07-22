@@ -60,25 +60,25 @@ public final class TransMoneyDlg extends Dialog {
 
    public final void updateKey() {
       super.updateKey();
-      if (Canvas.a(2)) {
+      if (Canvas.isKeyPressed(2)) {
          if (this.focus / 3 > 0) {
             this.focus -= 3;
          }
-      } else if (Canvas.a(4)) {
+      } else if (Canvas.isKeyPressed(4)) {
          if (this.focus % 3 > 0) {
             --this.focus;
          }
-      } else if (Canvas.a(6)) {
+      } else if (Canvas.isKeyPressed(6)) {
          if (this.focus % 3 < 2) {
             ++this.focus;
          }
-      } else if (Canvas.a(8) && this.focus / 3 < 2) {
+      } else if (Canvas.isKeyPressed(8) && this.focus / 3 < 2) {
          this.focus += 3;
       }
 
       if (Canvas.isPointerClick) {
          for(int var1 = 0; var1 < this.money.length; ++var1) {
-            if (Canvas.b(this.x + var1 % 3 * this.wItem, this.y + var1 / 3 * this.hItem, this.wItem, this.hItem)) {
+            if (Canvas.isPointerInRect(this.x + var1 % 3 * this.wItem, this.y + var1 / 3 * this.hItem, this.wItem, this.hItem)) {
                Canvas.isPointerClick = false;
                this.focus = var1;
                return;

@@ -19,7 +19,7 @@ public final class APartInfo extends Part {
             }
          } else {
             ImageInfo var7 = AvatarData.listImgInfo[this.imgID[var2]];
-            AvatarData.a(var1, var7.bigID, var7.x0, var7.y0, var7.w, var7.h, var3 + this.dx[var2] * AvMain.hd - (var5 == Base.LEFT ? (this.dx[var2] * AvMain.hd << 1) + var7.w * AvMain.hd : 0), var4 + this.dy[var2] * AvMain.hd, var5, 0);
+            AvatarData.drawImgRegion(var1, var7.bigID, var7.x0, var7.y0, var7.w, var7.h, var3 + this.dx[var2] * AvMain.hd - (var5 == Base.LEFT ? (this.dx[var2] * AvMain.hd << 1) + var7.w * AvMain.hd : 0), var4 + this.dy[var2] * AvMain.hd, var5, 0);
          }
       }
 

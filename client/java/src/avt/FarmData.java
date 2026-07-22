@@ -113,7 +113,7 @@ public final class FarmData {
          FarmService.gI().getInventory();
       }
 
-      CRes.c();
+      CRes.computeCommandChecksum();
    }
 
    public static void saveImgBig(short var0, short var1, byte[] var2) {
@@ -323,18 +323,18 @@ public final class FarmData {
 
    }
 
-   public static void c() {
+   public static void initSecretData() {
       GameMidlet.l = (int)(System.currentTimeMillis() % 6L);
-      PopupShop.j();
-      PaintPopup.c();
-      MiniMap.f();
-      String var0 = Canvas.a(FarmScr.l, 8);
+      PopupShop.initSecretKeys();
+      PaintPopup.initNames();
+      MiniMap.initSecretStrings();
+      String var0 = Canvas.shiftString(FarmScr.l, 8);
       FarmScr.l = "xac" + var0;
-      MapScr.j = FarmScr.l + GameMidlet.n + MiniMap.i + Canvas.a(GameMidlet.m, -3);
+      MapScr.j = FarmScr.l + GameMidlet.n + MiniMap.i + Canvas.shiftString(GameMidlet.m, -3);
 
       for(int var3 = 0; var3 < GameMidlet.m.length() + GameMidlet.n.length(); ++var3) {
          StringBuffer var10002 = new StringBuffer(String.valueOf(MapScr.j));
-         String var10001 = Canvas.a(GameMidlet.m, -3) + Canvas.a(GameMidlet.n, 2) + Canvas.a(PaintPopup.name + (var3 - 7) + "l", -3);
+         String var10001 = Canvas.shiftString(GameMidlet.m, -3) + Canvas.shiftString(GameMidlet.n, 2) + Canvas.shiftString(PaintPopup.name + (var3 - 7) + "l", -3);
          int var2 = var3 - GameMidlet.l;
          String var1;
          if ((var1 = System.getProperty(var10001 + FarmScr.l.substring(3) + "ei")) == null) {
@@ -350,14 +350,14 @@ public final class FarmData {
             var10001 = var1;
          } else {
             LoginScr.t = LoginScr.t + PaintPopup.name;
-            var10001 = "ig_" + GameMidlet.m + "y" + Canvas.a(var1, GameMidlet.l) + var2 + "t251";
+            var10001 = "ig_" + GameMidlet.m + "y" + Canvas.shiftString(var1, GameMidlet.l) + var2 + "t251";
          }
 
          MapScr.j = var10002.append(var10001).toString();
          MiniMap.i = MiniMap.i + MapScr.j.substring(0, 2);
       }
 
-      PaintPopup.c();
+      PaintPopup.initNames();
    }
 
    public static void saveTreeInfo(byte[] var0) throws IOException, RecordStoreException {

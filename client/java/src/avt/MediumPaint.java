@@ -37,7 +37,7 @@ public final class MediumPaint implements IPaint {
          var3.printStackTrace();
       }
 
-      FilePack.b(T.av);
+      FilePack.init(T.av);
       Avatar.imgHit = FrameImage.init("5", 50, 48);
       Avatar.imgKiss = FrameImage.init("2", 11, 10);
       Canvas.imgTabInfo = FilePack.getImage("transtab");
@@ -248,7 +248,7 @@ public final class MediumPaint implements IPaint {
          var1.drawImage(f[12], var2.x - 27, var2.y - 36, 0);
       } else {
          var1.drawImage(c, var2.x - 27, var2.y - 36, 0);
-         d(var1, var2);
+         paintCard(var1, var2);
       }
 
    }
@@ -258,12 +258,12 @@ public final class MediumPaint implements IPaint {
          var1.drawImage(f[12], var2.x - 27, var2.y - 36, 0);
       } else {
          var1.drawImage(b, var2.x - 27, var2.y - 36, 0);
-         d(var1, var2);
+         paintCard(var1, var2);
       }
 
    }
 
-   private static void d(Graphics var0, Card var1) {
+   private static void paintCard(Graphics var0, Card var1) {
       int var2 = 0;
 
       while(var2 < 2) {
@@ -502,7 +502,7 @@ public final class MediumPaint implements IPaint {
       if (var8 == 1) {
          ((FarmItem)FarmData.listItemFarm.elementAt(var2)).paint(var1, var4, var3 + var6 / 2, 0, 3);
       } else {
-         FarmData.treeInfo[var2].a(var1, 7, var4, var3 + var6 / 2, 3);
+         FarmData.treeInfo[var2].paint(var1, 7, var4, var3 + var6 / 2, 3);
       }
 
       Canvas.borderFont.drawString(var1, String.valueOf(var9), var4, var3 + var6 / 2 + var6 - 2, 2);
@@ -590,7 +590,7 @@ public final class MediumPaint implements IPaint {
 
    public final void initResourceTwo() {
       PaintPopup.color = new int[]{6201499, 2378578, 8705740, 2716523, 16701696, 7042560};
-      FilePack.b(T.av);
+      FilePack.init(T.av);
       a = FrameImage.init("round", 8, 8);
       FilePack.reset();
       e = null;
@@ -642,32 +642,32 @@ public final class MediumPaint implements IPaint {
 
    public final void initResourceFive() {
       if (Canvas.isPointerClick) {
-         if (Canvas.b(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20, PaintPopup.gI().y + PaintPopup.hTab + AvMain.hBlack / 2, 40, 40)) {
+         if (Canvas.isPointerInRect(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20, PaintPopup.gI().y + PaintPopup.hTab + AvMain.hBlack / 2, 40, 40)) {
             RegisterScr.gI().setKeyUpDown(0);
             Canvas.isPointerClick = false;
-         } else if (Canvas.b(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20, PaintPopup.gI().y + PaintPopup.hTab + 95 - GameMidlet.avatar.height / 2 - 20, 40, 45)) {
+         } else if (Canvas.isPointerInRect(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20, PaintPopup.gI().y + PaintPopup.hTab + 95 - GameMidlet.avatar.height / 2 - 20, 40, 45)) {
             RegisterScr.gI().setKeyUpDown(1);
             Canvas.isPointerClick = false;
-         } else if (Canvas.b(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20 - 40, PaintPopup.gI().y + PaintPopup.hTab + AvMain.hBlack / 2 + 50 * RegisterScr.gI().index, 40, 40)) {
+         } else if (Canvas.isPointerInRect(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20 - 40, PaintPopup.gI().y + PaintPopup.hTab + AvMain.hBlack / 2 + 50 * RegisterScr.gI().index, 40, 40)) {
             RegisterScr.gI().setKeyLeftRight(-1);
             RegisterScr.gI().countLeft = 6;
             Canvas.isPointerClick = false;
-         } else if (Canvas.b(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20 + 40, PaintPopup.gI().y + PaintPopup.hTab + AvMain.hBlack / 2 + 50 * RegisterScr.gI().index, 40, 40)) {
+         } else if (Canvas.isPointerInRect(PaintPopup.gI().x + PaintPopup.gI().w / 2 - 20 + 40, PaintPopup.gI().y + PaintPopup.hTab + AvMain.hBlack / 2 + 50 * RegisterScr.gI().index, 40, 40)) {
             RegisterScr.gI().setKeyLeftRight(1);
             RegisterScr.gI().countRight = 6;
             Canvas.isPointerClick = false;
          }
       }
 
-      if (Canvas.a(2)) {
+      if (Canvas.isKeyPressed(2)) {
          RegisterScr.gI().setKeyUpDown(RegisterScr.gI().index - 1);
-      } else if (Canvas.a(4)) {
+      } else if (Canvas.isKeyPressed(4)) {
          RegisterScr.gI().setKeyLeftRight(-1);
          RegisterScr.gI().countLeft = 6;
-      } else if (Canvas.a(6)) {
+      } else if (Canvas.isKeyPressed(6)) {
          RegisterScr.gI().setKeyLeftRight(1);
          RegisterScr.gI().countRight = 6;
-      } else if (Canvas.a(8)) {
+      } else if (Canvas.isKeyPressed(8)) {
          RegisterScr.gI().setKeyUpDown(RegisterScr.gI().index + 1);
       }
 
@@ -760,7 +760,7 @@ public final class MediumPaint implements IPaint {
    public final void updateKeyOn(Command var1, Command var2, Command var3) {
    }
 
-   private static int b(Command var0, Command var1, Command var2) {
+   private static int getSoftKeyPointer(Command var0, Command var1, Command var2) {
       if (var0 != null && !var0.caption.equals("") && Canvas.isPointer(0, Canvas.hCan - Canvas.hTab, 95, Canvas.hTab)) {
          return 1;
       } else if (var1 != null && !var1.caption.equals("") && Canvas.isPointer(Canvas.w / 2 - 43 - 8, Canvas.hCan - Canvas.hTab, 95, Canvas.hTab)) {
