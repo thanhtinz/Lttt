@@ -1373,6 +1373,7 @@ public class User {
     }
 
     public void addExp(int exp) {
+        exp = (int) Math.round(exp * avatar.server.ServerManager.expRate);
         this.expMain += exp;
         int expMax = getExpMax();
         if (this.expMain >= expMax) {

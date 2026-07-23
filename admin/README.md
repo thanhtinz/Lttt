@@ -46,10 +46,24 @@ Chỉ build cho các bảng **thật sự có** trong DB — không tạo bảng
 | Máy chủ QL | (config file) | Thêm/sửa/xoá máy chủ + Test kết nối |
 
 ## Về "live" / hot-reload
-Server Java đọc bảng `settings` (`bao_tri`, `thong_bao`, `hash_settings`) **khi load settings**.
-Trang **Điều khiển server** ghi vào các key này và đổi `hash_settings`. Hiệu lực khi server nạp
-lại settings (khởi động lại — hoặc nếu bổ sung cơ chế theo dõi `hash_settings` phía server).
-Sửa **vật phẩm/NPC/...** áp dụng khi server nạp lại dữ liệu tương ứng.
+Server Java có **SettingsWatcher** (đọc bảng `settings` mỗi 5s, xem phần server bên dưới).
+Khi trang **Điều khiển server** thay đổi và bump `hash_settings`, server **áp dụng ngay không cần restart**:
+
+| Chức năng | Key `settings` | Hiệu lực |
+|-----------|----------------|----------|
+| Bảo trì | `bao_tri` = true/false | Ngay |
+| Thông báo/news | `thong_bao` | Ngay |
+| Hệ số EXP | `heso_exp` = số (vd 2.0) | Ngay (nhân vào `User.addExp`) |
+| Thông báo tới tất cả | `cmd` = `broadcast:<msg>` | Ngay (dialog cho mọi người online) |
+| Reset boss | `cmd` = `reset_boss` | Ngay |
+| Khởi động lại | `cmd` = `restart` | Ngay (server thoát, cần trình quản lý tự bật lại) |
+| Trạng thái sống | server ghi `heartbeat`, `server_start` | Panel hiện 🟢/🔴 + uptime |
+
+> Cần chạy bản server đã build lại (có `SettingsWatcher`). Lệnh trong `cmd` là **một-lần**: server
+> thực thi xong tự xoá. `restart` chỉ thoát tiến trình — muốn tự bật lại cần chạy server dưới
+> systemd / script vòng lặp / pm2.
+
+Sửa **vật phẩm/NPC/...** vẫn áp dụng khi server nạp lại dữ liệu tương ứng.
 
 > Các tính năng cần bảng/tích hợp chưa có trong DB (hòm thư, sự kiện toggle, kỹ năng, forum, chat...)
 > **không** được tạo — panel chỉ quản lý dữ liệu đang tồn tại thật.
