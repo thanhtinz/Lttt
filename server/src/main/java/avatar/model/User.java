@@ -875,6 +875,21 @@ public class User {
             return false;
         }
 
+        // Auth tập trung qua cổng game: OK -> đồng bộ users local rồi đăng nhập như cũ;
+        // WRONG/LOCKED -> chặn; NOT_FOUND/ERROR/DISABLED -> fallback tài khoản cũ trong DB game.
+        int centralAuth = avatar.server.CentralAuth.verify(this.username, password);
+        if (centralAuth == avatar.server.CentralAuth.WRONG_PASSWORD) {
+            getService().serverMessage("Tài khoản hoặc mật khẩu không chính xác.");
+            return false;
+        }
+        if (centralAuth == avatar.server.CentralAuth.LOCKED) {
+            getService().serverMessage("Tài khoản này đang bị khóa trên cổng game.");
+            return false;
+        }
+        if (centralAuth == avatar.server.CentralAuth.OK) {
+            avatar.server.CentralAuth.syncLocalAccount(this.username, Utils.md5(password));
+        }
+
         String ACCOUNT_LOGIN = "SELECT * FROM `users` WHERE `username` = ? AND `password` = ? LIMIT 1 FOR UPDATE;";
         String SET_LOCK_ACCOUNT = "UPDATE `users` SET `login_lock` = 1 WHERE `id` = ?;";
         try (Connection connection = DbManager.getInstance().getConnection();
