@@ -886,6 +886,10 @@ public class User {
             getService().serverMessage("Tài khoản này đang bị khóa trên cổng game.");
             return false;
         }
+        if (centralAuth == avatar.server.CentralAuth.UNVERIFIED) {
+            getService().serverMessage("Tài khoản chưa xác minh email. Vui lòng vào website để xác minh.");
+            return false;
+        }
         if (centralAuth == avatar.server.CentralAuth.OK) {
             avatar.server.CentralAuth.syncLocalAccount(this.username, Utils.md5(password));
         }

@@ -28,7 +28,7 @@ import org.json.simple.JSONValue;
  *
  * Luồng: đăng nhập game -> hỏi cổng.
  *   OK             -> đồng bộ dòng users trong DB game (tạo nếu chưa có) rồi đăng nhập.
- *   WRONG/LOCKED   -> từ chối ngay (tài khoản thuộc cổng).
+ *   WRONG/LOCKED/UNVERIFIED -> từ chối ngay (tài khoản thuộc cổng / chưa xác minh email).
  *   NOT_FOUND      -> tài khoản cũ chưa có trên cổng: fallback kiểm tra DB game như cũ.
  *   ERROR/DISABLED -> cổng tắt/lỗi: fallback DB game để không chặn người chơi.
  */
@@ -38,6 +38,7 @@ public final class CentralAuth {
     public static final int WRONG_PASSWORD = 1;
     public static final int LOCKED = 2;
     public static final int NOT_FOUND = 3;
+    public static final int UNVERIFIED = 6;
     public static final int DISABLED = 4;
     public static final int ERROR = 5;
 
@@ -111,6 +112,8 @@ public final class CentralAuth {
                     return LOCKED;
                 case "not_found":
                     return NOT_FOUND;
+                case "unverified":
+                    return UNVERIFIED;
                 default:
                     return ERROR;
             }
