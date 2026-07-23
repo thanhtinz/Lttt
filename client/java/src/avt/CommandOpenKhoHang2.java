@@ -4,11 +4,11 @@ import javax.microedition.lcdui.Graphics;
 
 final class CommandOpenKhoHang2 extends Command {
    private Item item;
-   private final int ii;
+   private final int focusIndex;
 
    CommandOpenKhoHang2(FarmScr var1, String var2, int var3, int var4, int var5) {
       super(var2, 13, var4);
-      this.ii = var5;
+      this.focusIndex = var5;
       this.item = (Item)FarmScr.listItemFarm.elementAt(var5);
    }
 
@@ -17,7 +17,7 @@ final class CommandOpenKhoHang2 extends Command {
    }
 
    public final void update() {
-      if (PopupShop.isTransFocus && this.ii == PopupShop.focus - FarmScr.getItemSeed().size()) {
+      if (PopupShop.isTransFocus && this.focusIndex == PopupShop.focus - FarmScr.getItemSeed().size()) {
          PopupShop.resetIsTrans();
          FarmItem var1 = FarmScr.getFarmItem(this.item.ID);
          PopupShop.addStr("Id: " + this.item.ID);

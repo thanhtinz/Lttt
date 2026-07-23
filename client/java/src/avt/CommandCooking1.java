@@ -5,12 +5,12 @@ import main.Canvas;
 
 final class CommandCooking1 extends Command {
    private final Food food;
-   private final int g;
+   private final int focusIndex;
 
    CommandCooking1(FarmScr var1, String var2, IAction var3, Food var4, int var5) {
       super(var2, var3);
       this.food = var4;
-      this.g = var5;
+      this.focusIndex = var5;
    }
 
    public final void paint(Graphics var1, int var2, int var3) {
@@ -18,7 +18,7 @@ final class CommandCooking1 extends Command {
       FarmData.paintImg(var1, var4.IDImg, var2 + PopupShop.h / 2, var3 + PopupShop.h / 2, 3);
       var1.translate(0, CameraList.cmtoY);
       var1.setClip(0, 0, 5 * PopupShop.h, PopupShop.sai);
-      if (this.g == PopupShop.focus) {
+      if (this.focusIndex == PopupShop.focus) {
          for(var2 = 0; var2 < this.food.material.length; ++var2) {
             Item var5;
             if (this.food.material[var2] < 50) {
@@ -51,7 +51,7 @@ final class CommandCooking1 extends Command {
    }
 
    public final void update() {
-      if (this.g == PopupShop.focus) {
+      if (this.focusIndex == PopupShop.focus) {
          PopupShop.resetIsTrans();
          FarmItem var1;
          PopupShop.addStr("Id: " + this.food.productID);

@@ -5,26 +5,26 @@ import main.Canvas;
 import main.GameMidlet;
 
 final class CommandOpenShop extends Command {
-   private Part f;
-   private short g;
-   private int h;
-   private int i;
-   private MapScr j;
+   private Part part;
+   private short idPart;
+   private int focusIndex;
+   private int index;
+   private MapScr mapScr;
 
    public CommandOpenShop(MapScr var1, String var2, IActionOpenShop var3, Part var4, short var5, int var6, int var7, int var8) {
       super(var2, var3);
-      this.j = var1;
-      this.f = var4;
-      this.g = var5;
-      this.h = var6;
-      this.i = var7;
+      this.mapScr = var1;
+      this.part = var4;
+      this.idPart = var5;
+      this.focusIndex = var6;
+      this.index = var7;
    }
 
    public final void update() {
-      if (PopupShop.isTransFocus && this.h == PopupShop.focus) {
-         Part var1 = this.f;
-         if (this.f.IDPart == -1) {
-            var1 = AvatarData.getPart(this.g);
+      if (PopupShop.isTransFocus && this.focusIndex == PopupShop.focus) {
+         Part var1 = this.part;
+         if (this.part.IDPart == -1) {
+            var1 = AvatarData.getPart(this.idPart);
          }
 
          if (var1.IDPart != -1) {
@@ -32,7 +32,7 @@ final class CommandOpenShop extends Command {
             PopupShop.resetIsTrans();
             PopupShop.addStr("Id: " + var1.IDPart);
             PopupShop.addStr(var1.name);
-            if (this.i == -1) {
+            if (this.index == -1) {
                PopupShop.addStr(Canvas.getPriceMoney(var1.price[0], var1.price[1], false));
             }
 
@@ -50,9 +50,9 @@ final class CommandOpenShop extends Command {
    }
 
    public final void paint(Graphics var1, int var2, int var3) {
-      Part var4 = this.f;
-      if (this.f.IDPart == -1) {
-         var4 = AvatarData.getPart(this.g);
+      Part var4 = this.part;
+      if (this.part.IDPart == -1) {
+         var4 = AvatarData.getPart(this.idPart);
       }
 
       if (var4.IDPart != -1) {

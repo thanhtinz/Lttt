@@ -5,13 +5,13 @@ import main.Canvas;
 
 final class CommandGoKhoHang2 extends Command {
    private final FarmItem fItem;
-   private final int II;
+   private final int focusIndex;
    private final Item item;
 
    CommandGoKhoHang2(FarmScr var1, String var2, int var3, int var4, FarmItem var5, int var6, Item var7) {
       super(var2, 11, var4);
       this.fItem = var5;
-      this.II = var6;
+      this.focusIndex = var6;
       this.item = var7;
    }
 
@@ -20,7 +20,7 @@ final class CommandGoKhoHang2 extends Command {
    }
 
    public final void update() {
-      if (PopupShop.isTransFocus && this.II == PopupShop.focus - FarmScr.itemProduct.size()) {
+      if (PopupShop.isTransFocus && this.focusIndex == PopupShop.focus - FarmScr.itemProduct.size()) {
          PopupShop.resetIsTrans();
          PopupShop.addStr("Id: " + this.fItem.ID);
          PopupShop.addStr(this.fItem.des);
