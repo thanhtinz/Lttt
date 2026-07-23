@@ -260,6 +260,13 @@ public class MessageHandler implements IMessageHandler {
                         }
                         break;
                     }
+                    case Cmd.REGISTER_BY_EMAIL: {
+                        if (this.client.user == null) {
+                            this.client.doRegister(mss);
+                            break;
+                        }
+                        break;
+                    }
                     case Cmd.GET_HANDLER: {
                         if (this.client.user != null) {
                             this.client.getHandler(mss);

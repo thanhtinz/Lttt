@@ -2069,9 +2069,47 @@ public void NhanThuongEventXuBoss() throws IOException {
         }
     }
 
+    /**
+     * Đăng ký tài khoản ngay trong game (cmd REGISTER_BY_EMAIL):
+     * client gửi username, password, email -> cổng game tạo tài khoản + gửi mail xác minh.
+     */
+    public void doRegister(Message ms) throws IOException {
+        String username = ms.reader().readUTF().trim().toLowerCase();
+        String password = ms.reader().readUTF().trim();
+        String email = ms.reader().readUTF().trim();
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            getAvatarService().serverDialog("Vui lòng nhập đầy đủ tài khoản, mật khẩu và email.");
+            return;
+        }
+        String[] res = avatar.server.CentralAuth.register(username, password, email);
+        if (res == null) {
+            getAvatarService().serverDialog("Hệ thống đăng ký đang bảo trì, vui lòng đăng ký trên website.");
+            return;
+        }
+        getAvatarService().serverDialog(res[1]);
+    }
+
     public void changePassword(Message ms) throws IOException {
         String passOld = ms.reader().readUTF();
         String passNew = ms.reader().readUTF();
+
+        // Ưu tiên đổi mật khẩu qua cổng game (auth tập trung)
+        String[] central = avatar.server.CentralAuth.changePassword(this.user.getUsername(), passOld, passNew);
+        if (central != null && !"not_found".equals(central[0])) {
+            if ("ok".equals(central[0])) {
+                // đồng bộ MD5 local để fallback vẫn khớp
+                avatar.server.CentralAuth.syncLocalAccount(this.user.getUsername(), Utils.md5(passNew));
+                Message ok = new Message(-62);
+                DataOutputStream ds = ok.writer();
+                ds.writeUTF(passNew);
+                ds.flush();
+                this.sendMessage(ok);
+            }
+            this.user.getService().serverDialog(central[1]);
+            return;
+        }
+        // Tài khoản cũ chưa có trên cổng (hoặc cổng tắt) -> đổi trong DB game như cũ
+
         try (Connection connection = DbManager.getInstance().getConnection()) {
             String ACCOUNT_LOGIN = "SELECT * FROM `users` WHERE `id` = ? AND `password` = ? LIMIT 1";
             PreparedStatement ps = connection.prepareStatement(ACCOUNT_LOGIN);
