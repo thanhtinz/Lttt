@@ -224,10 +224,10 @@ class ServerManager {
    * Mở TCP server. `onSession` được gọi cho mỗi kết nối mới để gắn handler
    * (tách ra để phần net không phụ thuộc vào handler).
    */
-  listen(onSession) {
+  listen(onSession, SessionClass = Session) {
     this.start = true;
     const srv = net.createServer((socket) => {
-      const s = new Session(socket, this.id++);
+      const s = new SessionClass(socket, this.id++);
       this.clients.push(s);
       this.numClients = this.clients.length;
       socket.on('close', () => this.disconnect(s));

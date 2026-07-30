@@ -23,12 +23,10 @@ async function main() {
 
   await serverManager.init();
 
-  // Gắn handler cho mỗi kết nối: bắt tay rồi chuyển tiếp cho MessageHandler
-  const { MessageHandler } = await import('./message/MessageHandler.js');
-  serverManager.listen((session) => {
-    session.setHandler(new MessageHandler(session));
-    session.handshakeMessage();
-  });
+  // GameSession tự gắn MessageHandler trong constructor (giống Session.java);
+  // ở đây chỉ cần bắt tay để gửi khoá XOR cho client.
+  const { GameSession } = await import('./net/GameSession.js');
+  serverManager.listen((session) => session.handshakeMessage(), GameSession);
 }
 
 main().catch((e) => {
