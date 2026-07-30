@@ -4,13 +4,7 @@
  * dùng lớp rỗng làm base để file vẫn import sạch; khi User.js có mặt Npc sẽ
  * kế thừa đúng như bản Java.
  */
-let _UserBase;
-try {
-  _UserBase = (await import('./User.js')).User;
-} catch (e) {
-  _UserBase = class {};
-}
-if (!_UserBase) _UserBase = class {};
+import { User } from './User.js';
 
 /** Thay cho Thread.sleep — timer nền nên unref. */
 function sleep(ms) {
@@ -20,7 +14,7 @@ function sleep(ms) {
   });
 }
 
-export class Npc extends _UserBase {
+export class Npc extends User {
   static ID_ADD = 2000000000;
 
   /** Java: @Builder Npc(int id, String name, short x, short y, ArrayList<Item> wearing) */

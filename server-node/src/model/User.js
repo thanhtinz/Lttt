@@ -810,6 +810,7 @@ export class User {
     const ACCOUNT_LOGIN = 'SELECT * FROM `users` WHERE `username` = ? AND `password` = ? LIMIT 1 FOR UPDATE;';
     const SET_LOCK_ACCOUNT = 'UPDATE `users` SET `login_lock` = 1 WHERE `id` = ?;';
     let connection = null;
+    let committed = false;
     try {
       connection = await dbManager.pool.getConnection();
       await connection.beginTransaction(); // Bắt đầu transaction
@@ -888,6 +889,7 @@ export class User {
 
         // Mọi thứ OK, commit và giữ khóa đăng nhập
         await connection.commit();
+        committed = true;
         return true;
       } else {
         this.getService().serverMessage(GameString.loginPassFail());
@@ -896,6 +898,12 @@ export class User {
       this.getService().serverMessage(ex.message);
     } finally {
       if (connection) {
+        // Java dùng try-with-resources: HikariCP tự rollback transaction chưa
+        // commit khi trả connection về pool. mysql2 KHÔNG làm vậy, nên phải
+        // rollback tay, nếu không `SELECT ... FOR UPDATE` sẽ giữ lock mãi.
+        if (!committed) {
+          try { await connection.rollback(); } catch { /* bỏ qua */ }
+        }
         try { connection.release(); } catch { /* bỏ qua */ }
       }
     }

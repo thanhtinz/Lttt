@@ -107,7 +107,7 @@ class ServerManager {
       const s = await this.readSettings();
       if (!s) return;
       const hash = s.get('hash_settings') ?? '';
-      if (hash === this.hashSettings) return;
+      if (hash === (this.hashSettings ?? '')) return;
       console.log('[Settings] Phát hiện thay đổi, nạp lại cấu hình...');
       this.applySettings(s);
       const cmd = (s.get('cmd') ?? '').trim();
