@@ -48,7 +48,10 @@ if (is_post()) {
     try {
         switch ($action) {
             case 'maintenance':
-                set_setting('bao_tri', post('bao_tri') === '1' ? 'true' : 'false');
+                // CHÚ Ý: trong server (Java & Node) `bao_tri` thực chất là cờ
+                // "server đang MỞ" (ServerManager.active = parseBoolean(bao_tri)),
+                // chứ không phải "đang bảo trì". Bật bảo trì ⇒ ghi 'false'.
+                set_setting('bao_tri', post('bao_tri') === '1' ? 'false' : 'true');
                 bump_hash();
                 flash('Đã cập nhật trạng thái bảo trì.');
                 break;
@@ -94,7 +97,9 @@ if (is_post()) {
     redirect(url_with([]));
 }
 
-$baoTri  = get_setting('bao_tri', 'false') === 'true';
+// `bao_tri` = cờ server đang MỞ (xem ghi chú ở case 'maintenance')
+$serverOpen = get_setting('bao_tri', 'true') !== 'false';
+$baoTri     = !$serverOpen;
 $notify  = get_setting('thong_bao', '');
 $expRate = (float) (get_setting('heso_exp', '1') ?: 1);
 $hb      = (int) (get_setting('heartbeat', '0') ?: 0);

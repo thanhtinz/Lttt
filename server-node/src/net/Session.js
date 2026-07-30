@@ -11,6 +11,7 @@
  */
 import { Message } from './Message.js';
 import { SessionCodec, FrameParser } from './SessionCodec.js';
+import serverManager from '../server/ServerManager.js';
 
 export class Session {
   /**
@@ -66,6 +67,11 @@ export class Session {
 
   isResourceHD() {
     return this.resourceType === 1;
+  }
+
+  /** Đường dẫn thư mục tài nguyên theo loại client (Java: getResourcesPath). */
+  getResourcesPath() {
+    return this.isResourceHD() ? serverManager.resHDPath : serverManager.resMediumPath;
   }
 
   _onData(chunk) {

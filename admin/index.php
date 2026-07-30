@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/lib/bootstrap.php';
 require_admin();
+require __DIR__ . '/lib/layout.php';
 
 $roleCol = config('admin_role_column', 'role');
 $lockCol = config('lock_column', 'login_lock');
