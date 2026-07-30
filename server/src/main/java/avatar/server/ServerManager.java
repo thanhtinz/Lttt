@@ -40,6 +40,7 @@ public class ServerManager {
     public static boolean active;
     protected static short port;
     public static String notify;
+    public static double expRate = 1.0;
     public static int bigImgVersion;
     public static int partVersion;
     public static int bigItemImgVersion;
@@ -83,27 +84,178 @@ public class ServerManager {
 
     protected static void loadSettings() {
         System.out.println("Load settings in database");
+        HashMap<String, String> settings = readSettings();
+        if (settings == null) {
+            System.exit(0);
+            return;
+        }
+        applySettings(settings);
+    }
+
+    /** Đọc toàn bộ bảng settings thành map. Trả về null nếu lỗi. */
+    private static HashMap<String, String> readSettings() {
         try (Connection connection = DbManager.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT * FROM `settings`;");
              ResultSet res = ps.executeQuery();) {
             HashMap<String, String> settings = new HashMap<>();
             while (res.next()) {
-                String name = res.getString("name");
-                String value = res.getString("value");
-                settings.put(name, value);
+                settings.put(res.getString("name"), res.getString("value"));
             }
-            if (settings.containsKey("hash_settings")) {
-                ServerManager.hashSettings = settings.get("hash_settings");
+            return settings;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /** Áp dụng các cờ cấu hình runtime từ bảng settings. */
+    private static void applySettings(HashMap<String, String> settings) {
+        if (settings.containsKey("hash_settings")) {
+            ServerManager.hashSettings = settings.get("hash_settings");
+        }
+        if (settings.containsKey("bao_tri")) {
+            ServerManager.active = Boolean.parseBoolean(settings.get("bao_tri"));
+        }
+        if (settings.containsKey("thong_bao")) {
+            ServerManager.notify = settings.get("thong_bao");
+        }
+        if (settings.containsKey("heso_exp")) {
+            try {
+                ServerManager.expRate = Double.parseDouble(settings.get("heso_exp"));
+            } catch (NumberFormatException ignored) {
             }
-            if (settings.containsKey("bao_tri")) {
-                ServerManager.active = Boolean.parseBoolean(settings.get("bao_tri"));
+        }
+    }
+
+    /**
+     * Thread theo dõi bảng settings: mỗi 5s so sánh hash_settings; nếu đổi thì
+     * nạp lại cấu hình (bảo trì / thông báo / hệ số EXP) và thực thi lệnh admin
+     * một-lần trong key `cmd`. Nhờ vậy admin panel "chỉnh là chạy" không cần restart.
+     */
+    public static void startSettingsWatcher() {
+        putSetting("server_start", String.valueOf(System.currentTimeMillis()));
+        Thread t = new Thread(() -> {
+            while (ServerManager.start) {
+                try {
+                    Thread.sleep(5000L);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                try {
+                    putSetting("heartbeat", String.valueOf(System.currentTimeMillis()));
+                    HashMap<String, String> settings = readSettings();
+                    if (settings == null) {
+                        continue;
+                    }
+                    String hash = settings.getOrDefault("hash_settings", "");
+                    if (hash.equals(ServerManager.hashSettings)) {
+                        continue; // không có thay đổi
+                    }
+                    System.out.println("[Settings] Phát hiện thay đổi, nạp lại cấu hình...");
+                    applySettings(settings);
+                    String cmd = settings.get("cmd");
+                    if (cmd != null && !cmd.trim().isEmpty()) {
+                        executeAdminCommand(cmd.trim());
+                        clearSetting("cmd");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            if (settings.containsKey("thong_bao")) {
-                ServerManager.notify = settings.get("thong_bao");
+        });
+        t.setDaemon(true);
+        t.setName("SettingsWatcher");
+        t.start();
+    }
+
+    /** Thực thi lệnh admin một-lần từ settings.cmd. */
+    private static void executeAdminCommand(String cmd) {
+        System.out.println("[Admin] Lệnh: " + cmd);
+        if (cmd.startsWith("broadcast:")) {
+            broadcastAll(cmd.substring("broadcast:".length()));
+        } else if (cmd.equals("reset_boss")) {
+            resetBosses();
+        } else if (cmd.equals("restart")) {
+            broadcastAll("May chu se khoi dong lai ngay bay gio!");
+            try {
+                Thread.sleep(1500L);
+            } catch (InterruptedException ignored) {
+            }
+            System.exit(0);
+        }
+    }
+
+    /** Gửi thông báo (dialog) tới toàn bộ người chơi đang online. */
+    public static void broadcastAll(String msg) {
+        if (msg == null || msg.isEmpty()) {
+            return;
+        }
+        List<User> copy;
+        synchronized (UserManager.users) {
+            copy = new ArrayList<>(UserManager.users);
+        }
+        for (User us : copy) {
+            try {
+                us.getAvatarService().serverDialog(msg);
+            } catch (Exception ignored) {
+            }
+        }
+        System.out.println("[Broadcast] " + msg + " -> " + copy.size() + " users");
+    }
+
+    /** Xoá boss cũ khỏi zone (tránh nhân đôi) rồi spawn lại. */
+    private static void resetBosses() {
+        try {
+            List<Integer> mapIds = List.of(11, 1, 7, 2, 3, 5, 8);
+            for (int mapId : mapIds) {
+                avatar.play.Map m = MapManager.getInstance().find(mapId);
+                if (m == null) {
+                    continue;
+                }
+                for (Zone z : m.getZones()) {
+                    for (User u : new ArrayList<>(z.getPlayers())) {
+                        if (u instanceof Boss) {
+                            z.remove(u);
+                        }
+                    }
+                }
+            }
+            for (int mapId : mapIds) {
+                Boss.spawnBossesForMap(mapId, 2);
+            }
+            broadcastAll("Boss da duoc reset!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /** Ghi (upsert) 1 key settings. */
+    private static void putSetting(String name, String value) {
+        try (Connection c = DbManager.getInstance().getConnection()) {
+            try (PreparedStatement up = c.prepareStatement("UPDATE `settings` SET `value` = ? WHERE `name` = ?");) {
+                up.setString(1, value);
+                up.setString(2, name);
+                if (up.executeUpdate() == 0) {
+                    try (PreparedStatement in = c.prepareStatement("INSERT INTO `settings` (`name`, `value`) VALUES (?, ?)");) {
+                        in.setString(1, name);
+                        in.setString(2, value);
+                        in.executeUpdate();
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.exit(0);
+        }
+    }
+
+    /** Xoá giá trị 1 key settings (dùng cho lệnh một-lần). */
+    private static void clearSetting(String name) {
+        try (Connection c = DbManager.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement("UPDATE `settings` SET `value` = '' WHERE `name` = ?");) {
+            ps.setString(1, name);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -229,6 +381,7 @@ public class ServerManager {
             ServerManager.numClients = 0;
             ServerManager.start = true;
             System.out.println("Start server Success !");
+            startSettingsWatcher();
             List<Integer> mapIds = List.of(11, 1, 7, 2, 3, 5, 8);
             for (int mapId : mapIds) {
                 Boss.spawnBossesForMap(mapId, 2);

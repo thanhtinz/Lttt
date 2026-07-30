@@ -484,10 +484,10 @@ public final class PBoardScr extends BoardScr {
             }
          }
 
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             this.D();
          } else {
-            if (Canvas.a(8)) {
+            if (Canvas.isKeyPressed(8)) {
                if (this.key > 0) {
                   --this.key;
                }
@@ -512,7 +512,7 @@ public final class PBoardScr extends BoardScr {
                return;
             }
 
-            if (Canvas.a(4)) {
+            if (Canvas.isKeyPressed(4)) {
                if ((var1 = this.setAssetCard()) == -1) {
                   var1 = 9;
                } else {
@@ -538,7 +538,7 @@ public final class PBoardScr extends BoardScr {
                return;
             }
 
-            if (!Canvas.a(6)) {
+            if (!Canvas.isKeyPressed(6)) {
                return;
             }
 

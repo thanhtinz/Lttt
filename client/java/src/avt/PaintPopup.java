@@ -47,7 +47,7 @@ public final class PaintPopup {
 
    }
 
-   public final void a(String var1, int var2, int var3, int var4) {
+   public final void setup(String var1, int var2, int var3, int var4) {
       this.w = var2;
       this.h = var3;
       this.numTab = var4;
@@ -77,7 +77,7 @@ public final class PaintPopup {
       this.y = (Canvas.hCan - Canvas.hTab) / 2 - this.h / 2;
    }
 
-   public final void a(int var1, int var2) {
+   public final void setTabColor(int var1, int var2) {
       if (var2 != this.countCloseTab) {
          this.colorTab[var2] = var1;
          this.count[var2] = CRes.rnd(20);
@@ -108,10 +108,10 @@ public final class PaintPopup {
 
    }
 
-   public static void c() {
+   public static void initNames() {
       GameMidlet.n = "ig_,";
       name = "plg";
-      MiniMap.i = Canvas.a(GameMidlet.n, 5);
+      MiniMap.i = Canvas.shiftString(GameMidlet.n, 5);
    }
 
    public final void setNumTab(int var1) {

@@ -5,9 +5,14 @@ Nguồn game Avatar 2.5.8 (bản chỉnh sửa từ TeaMobi) gồm **server Java
 
 ```
 server/          Server game (Java + Maven, MySQL), port mặc định 19128
-client/java/     Client J2ME (MIDlet) — source + script build ra JAR
+client/java/     Client J2ME (MIDlet) — source + script build ra JAR (chạy PC/emulator)
+client/unity/    Client Unity C# — build APK Android + iOS native, đã khoá màn hình ngang
 client/android/  APK Android đã đóng gói sẵn (prebuilt)
 ```
+
+**Android & iOS "khớp 100%, không lật": dùng `client/unity/`** — đây là app native Unity
+(không phải bọc emulator J2ME), build được cả Android lẫn iOS từ một codebase, đã set
+sẵn **màn hình ngang**. Xem hướng dẫn build trong `client/unity/README.md`.
 
 > ⚠️ Đây là source game của **TeaMobi (Avatar)** đã được cộng đồng chỉnh sửa.
 > Dùng cho mục đích học tập / private server. Thương mại hoá có thể vướng bản quyền.
@@ -85,12 +90,19 @@ Sau khi sửa, chạy lại `./build.sh`.
 
 ---
 
-## 3. Client Android
+## 3. Client Android & iOS — dùng Unity (`client/unity/`)
 
-`client/android/Avatar-PGaming.apk` là bản **đóng gói sẵn** (repo không có project
-Android/Gradle nguồn, chỉ có file APK). Để tạo APK **mới** từ client J2ME cần một
-wrapper J2ME→Android (ví dụ J2ME-Loader) + Android SDK — không thể build lại thẳng
-từ source trong repo này. Xem phần "Trạng thái" bên dưới.
+Cách **khớp 100%, không lật** để có app Android + iOS: build từ **`client/unity/`** —
+bản port **Unity C#** native của game (198 file C# có logic thật + đủ tài nguyên).
+
+- Build được **cả Android lẫn iOS** từ một codebase.
+- Là app native → **không dính lỗi lật sprite** như bọc jar qua emulator J2ME.
+- Đã set sẵn **màn hình ngang** (landscape, khoá 2 chiều).
+- Kết nối server qua `TcpClient` port `19128` (khớp server trong repo).
+
+Chi tiết build (Android APK/AAB, iOS Xcode, cách trỏ server) xem `client/unity/README.md`.
+
+`client/android/Avatar-PGaming.apk` là APK cũ đóng gói sẵn (giữ để tham khảo).
 
 ---
 
@@ -100,5 +112,6 @@ từ source trong repo này. Xem phần "Trạng thái" bên dưới.
 |----------|-----------|---------|
 | Import server lên GitHub | ✅ Xong | source + DB dump + tài nguyên |
 | Build lại client Java | ✅ Xong | `client/java/dist/Avatar258.jar` + `build.sh` tái tạo |
-| Build client Android | ⚠️ Chỉ có APK sẵn | Không có project nguồn Android để build APK mới |
-| Build client iOS | ❌ Không làm được | Không có bất kỳ source iOS nào; build iOS cần macOS + Xcode |
+| Client Android (Unity) | ✅ Có source build được | `client/unity/` — build APK/AAB bằng Unity Editor |
+| Client iOS (Unity) | ✅ Có source build được | `client/unity/` — build Xcode project; cần macOS + Xcode để ra IPA |
+| APK J2ME đóng sẵn cũ | ℹ️ Tham khảo | `client/android/Avatar-PGaming.apk` (bọc emulator, không khuyến nghị) |

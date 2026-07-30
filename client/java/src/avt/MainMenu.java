@@ -146,7 +146,7 @@ public final class MainMenu extends MyScreen {
          default:
             break;
          case 15:
-            MapScr.gI().a(GameMidlet.myIndexP);
+            MapScr.gI().showMyInfo(GameMidlet.myIndexP);
             return;
          case 16:
             if ((var8 = (StringObj)MapScr.listCmdRotate.elementAt(var2)).type == 1) {
@@ -409,17 +409,17 @@ public final class MainMenu extends MyScreen {
          }
       }
 
-      if (Canvas.a(4)) {
+      if (Canvas.isKeyPressed(4)) {
          --this.selected;
          if (this.selected < 0) {
             this.selected = this.list.size() - 1;
          }
-      } else if (Canvas.a(6)) {
+      } else if (Canvas.isKeyPressed(6)) {
          ++this.selected;
          if (this.selected >= this.list.size()) {
             this.selected = 0;
          }
-      } else if (Canvas.a(2)) {
+      } else if (Canvas.isKeyPressed(2)) {
          if ((var3 = this.selected - this.numW) < 0) {
             if ((var3 += this.list.size() / this.numW * this.numW + this.numW) < this.list.size()) {
                this.selected = var3;
@@ -427,7 +427,7 @@ public final class MainMenu extends MyScreen {
          } else {
             this.selected = var3;
          }
-      } else if (Canvas.a(8)) {
+      } else if (Canvas.isKeyPressed(8)) {
          this.selected += this.numW;
          if (this.selected >= this.list.size()) {
             this.selected %= this.numW;

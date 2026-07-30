@@ -23,7 +23,7 @@ final class IActionLoad implements IAction {
       } else if (var4.equals("")) {
          Canvas.startOKDlg(T.enterCard[1]);
       } else {
-         GlobalService.gI().b(var10001, var10002, var4);
+         GlobalService.gI().doLoadCard(var10001, var10002, var4);
          var10000.commandTab(var10000.left.indexMenu, var10000.left.subIndex);
          Canvas.startWaitDlg();
       }

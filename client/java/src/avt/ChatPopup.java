@@ -107,7 +107,7 @@ public final class ChatPopup {
    }
 
    static {
-      FilePack.b(T.aw);
+      FilePack.init(T.aw);
       hText = 8;
       imgPopup[0] = FrameImage.init("c", hText, hText);
       imgPopup[1] = FrameImage.init("cB", hText, hText);

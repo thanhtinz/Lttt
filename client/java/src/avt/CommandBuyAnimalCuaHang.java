@@ -4,26 +4,26 @@ import javax.microedition.lcdui.Graphics;
 import main.Canvas;
 
 final class CommandBuyAnimalCuaHang extends Command {
-   private final AnimalInfo f;
-   private final int g;
+   private final AnimalInfo animalInfo;
+   private final int focusIndex;
 
    CommandBuyAnimalCuaHang(FarmScr var1, String var2, int var3, int var4, AnimalInfo var5, int var6) {
       super(var2, 8, var4);
-      this.f = var5;
-      this.g = var6;
+      this.animalInfo = var5;
+      this.focusIndex = var6;
    }
 
    public final void paint(Graphics var1, int var2, int var3) {
-      AvatarData.paintImg(var1, this.f.iconID, var2 + PopupShop.h / 2, var3 + PopupShop.h / 2, 3);
+      AvatarData.paintImg(var1, this.animalInfo.iconID, var2 + PopupShop.h / 2, var3 + PopupShop.h / 2, 3);
    }
 
    public final void update() {
-      if (this.g == PopupShop.focus - FarmData.treeInfo.length && PopupShop.isTransFocus) {
+      if (this.focusIndex == PopupShop.focus - FarmData.treeInfo.length && PopupShop.isTransFocus) {
          PopupShop.resetIsTrans();
-         PopupShop.addStr("Id: " + this.f.iconID);
-         PopupShop.addStr(this.f.name + "(" + this.f.harvestTime + T.h + ")");
-         PopupShop.addStr(T.priceStr + Canvas.getPriceMoney(this.f.price[0], this.f.price[1], false));
-         PopupShop.addStr(this.f.des);
+         PopupShop.addStr("Id: " + this.animalInfo.iconID);
+         PopupShop.addStr(this.animalInfo.name + "(" + this.animalInfo.harvestTime + T.h + ")");
+         PopupShop.addStr(T.priceStr + Canvas.getPriceMoney(this.animalInfo.price[0], this.animalInfo.price[1], false));
+         PopupShop.addStr(this.animalInfo.des);
          PopupShop.addStr(MapScr.strTkFarm());
       }
 

@@ -57,7 +57,7 @@ public class AvMain {
 
    public void updateKey() {
       if (Canvas.isPointerRelease) {
-         if (Canvas.b(0, Canvas.ae[0].y, Canvas.w - 1, Canvas.hTab)) {
+         if (Canvas.isPointerInRect(0, Canvas.ae[0].y, Canvas.w - 1, Canvas.hTab)) {
             switch (Canvas.paint.getDisplayValue()) {
                case 0:
                   if (Canvas.stypeInt == 0) {
@@ -119,7 +119,7 @@ public class AvMain {
          }
       }
 
-      if (Canvas.a(5)) {
+      if (Canvas.isKeyPressed(5)) {
          if (this.center != null) {
             Canvas.endDlg();
             this.perform(this.center);
@@ -131,18 +131,18 @@ public class AvMain {
             return;
          }
       } else {
-         if (Canvas.a(12)) {
+         if (Canvas.isKeyPressed(12)) {
             this.perform(this.left);
             return;
          }
 
          if (Canvas.E) {
-            if (Canvas.a(13) || Canvas.keyReleased[13]) {
+            if (Canvas.isKeyPressed(13) || Canvas.keyReleased[13]) {
                Canvas.keyReleased[13] = false;
                this.perform(this.right);
                return;
             }
-         } else if (Canvas.a(13)) {
+         } else if (Canvas.isKeyPressed(13)) {
             this.perform(this.right);
          }
       }

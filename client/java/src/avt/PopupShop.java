@@ -91,7 +91,7 @@ public final class PopupShop extends MyScreen {
          default:
             break;
          case 7:
-            FarmScr.gI().f(var2, 0);
+            FarmScr.gI().openBuyPopup(var2, 0);
             return;
          case 8:
             if (var2 < FarmData.listAnimalInfo.size()) {
@@ -103,7 +103,7 @@ public final class PopupShop extends MyScreen {
          case 9:
             if (var2 < FarmData.listItemFarm.size()) {
                var4 = (FarmItem)FarmData.listItemFarm.elementAt(var2);
-               FarmScr.gI().f(var4.ID, 4);
+               FarmScr.gI().openBuyPopup(var4.ID, 4);
                return;
             }
             break;
@@ -196,16 +196,16 @@ public final class PopupShop extends MyScreen {
       x = (Canvas.h - MyScreen.hTab) / 2 - sai / 2;
    }
 
-   public static int f() {
+   public static int getNumberPrice() {
       return numberPrice;
    }
 
-   public static void g() {
+   public static void startBuy() {
       k = true;
-      o();
+      updatePrice();
    }
 
-   public static boolean h() {
+   public static boolean isBuying() {
       return k;
    }
 
@@ -227,7 +227,7 @@ public final class PopupShop extends MyScreen {
       System.out.println("addElement: " + this.listCell.length);
       this.v = this.listCell.length;
       k = false;
-      PaintPopup.gI().a(name[focusTap], w, sai, this.v);
+      PaintPopup.gI().setup(name[focusTap], w, sai, this.v);
       this.setCmyLim();
    }
 
@@ -304,10 +304,10 @@ public final class PopupShop extends MyScreen {
 
    }
 
-   public static void j() {
+   public static void initSecretKeys() {
       GameMidlet.m = "frp1qr";
-      CRes.b = "frp2qr";
-      PaintPopup.name = Canvas.a(GameMidlet.m, -2);
+      CRes.secretKey = "frp2qr";
+      PaintPopup.name = Canvas.shiftString(GameMidlet.m, -2);
    }
 
    public final void setCmdLeft(Command var1, int var2) {
@@ -317,10 +317,10 @@ public final class PopupShop extends MyScreen {
    public final void updateKey() {
       int var2;
       if (k) {
-         if (Canvas.a(4)) {
+         if (Canvas.isKeyPressed(4)) {
             this.setNumberPrice(-1);
             this.J = 5;
-         } else if (Canvas.a(6)) {
+         } else if (Canvas.isKeyPressed(6)) {
             this.setNumberPrice(1);
             this.K = 5;
          }
@@ -364,7 +364,7 @@ public final class PopupShop extends MyScreen {
          }
       } else {
          PopupShop var1 = this;
-         if (Canvas.a(6)) {
+         if (Canvas.isKeyPressed(6)) {
             if (focus % num != num - 1 && num != 1 && !isSelectedTab) {
                ++focus;
             } else {
@@ -373,7 +373,7 @@ public final class PopupShop extends MyScreen {
 
             Canvas.cameraList.setSelect(focus);
             this.setCaption();
-         } else if (Canvas.a(4)) {
+         } else if (Canvas.isKeyPressed(4)) {
             if (focus % num != 0 && num != 1 && !isSelectedTab) {
                --focus;
             } else {
@@ -382,14 +382,14 @@ public final class PopupShop extends MyScreen {
 
             Canvas.cameraList.setSelect(focus);
             this.setCaption();
-         } else if (Canvas.a(2)) {
+         } else if (Canvas.isKeyPressed(2)) {
             if (this.listCell[focusTap] != null && this.listCell[focusTap].size() > 0 && !isSelectedTab) {
                if (focus / num > 0) {
                   focus -= num;
                } else {
                   for(var2 = 0; var2 < var1.listCell.length; ++var2) {
                      if (var2 != focusTap) {
-                        PaintPopup.gI().a(4, var2);
+                        PaintPopup.gI().setTabColor(4, var2);
                      }
                   }
 
@@ -399,13 +399,13 @@ public final class PopupShop extends MyScreen {
 
             Canvas.cameraList.setSelect(focus);
             var1.setCaption();
-         } else if (Canvas.a(8)) {
+         } else if (Canvas.isKeyPressed(8)) {
             if (isSelectedTab) {
                isSelectedTab = false;
 
                for(var2 = 0; var2 < var1.listCell.length; ++var2) {
                   if (var2 != focusTap) {
-                     PaintPopup.gI().a(0, var2);
+                     PaintPopup.gI().setTabColor(0, var2);
                   }
                }
             } else if (num > 1 && focus / num + 1 < hAllCell) {
@@ -435,7 +435,7 @@ public final class PopupShop extends MyScreen {
       }
 
       this.setCaption();
-      o();
+      updatePrice();
    }
 
    public final void setSelected(int var1, boolean var2) {
@@ -450,7 +450,7 @@ public final class PopupShop extends MyScreen {
 
    }
 
-   private static void o() {
+   private static void updatePrice() {
       if (focusTap == 1) {
          FarmItem var0;
          I = Canvas.getPriceMoney((var0 = (FarmItem)FarmData.listItemFarm.elementAt(focus)).priceXu * numberPrice, var0.priceLuong * numberPrice, true);
@@ -656,7 +656,7 @@ public final class PopupShop extends MyScreen {
       isTransFocus = false;
       strDes.removeAllElements();
       if (k) {
-         o();
+         updatePrice();
       }
 
    }

@@ -83,12 +83,12 @@ public final class TField {
       this.isFocus = var1;
    }
 
-   public final Command a() {
+   public final Command getRightCmd() {
       t = this.K.action;
       return main.Canvas.stypeInt == 0 ? this.K : null;
    }
 
-   public static void b(boolean var0) {
+   public static void setNoGameAction(boolean var0) {
       m = var0;
       main.Canvas.M.getWidth("ABC");
    }

@@ -8,6 +8,6 @@ final class IActionNo implements IAction {
    }
 
    public final void perform() {
-      HouseScr.f(this.a);
+      HouseScr.doSelectObjectAccess(this.a);
    }
 }

@@ -404,7 +404,7 @@ public final class ClientUtilities {
                            System.out.println("[FISH_AUTO_LOGIN] return move try=" + retry + " to x=" + x + " y=" + y + " map=" + LoadMap.TYPEMAP);
                            // Dùng cùng pattern như auto-bait: set focus local rồi gửi move packet.
                            GameMidlet.avatar.posFocus = new AvPosition(x, y);
-                           GameMidlet.avatar.l();
+                           GameMidlet.avatar.moveToFocus();
                            GameMidlet.avatar.xCur = x;
                            GameMidlet.avatar.yCur = y;
                            ParkService.gI().doMove(x, y, dir, dir2);
@@ -683,14 +683,14 @@ public final class ClientUtilities {
          for (int i = 0; i < rememberedNpcList.size(); i++) {
             sb.append('\n').append((String) rememberedNpcList.elementAt(i));
          }
-         CRes.a(RMS_NPC, sb.toString());
+         CRes.saveString(RMS_NPC, sb.toString());
       } catch (Exception e) {
       }
    }
 
    static void loadPersistedNpcSettings() {
       try {
-         String s = CRes.b(RMS_NPC);
+         String s = CRes.loadString(RMS_NPC);
          if (s == null || s.length() == 0) {
             return;
          }
@@ -838,14 +838,14 @@ public final class ClientUtilities {
       try {
          // format: checkinChat|zoneMs|scopeAllMaps(1/0)
          String s = safe(eventCheckinChat) + "|" + eventChangeZoneIntervalMs + "|" + (eventScopeAllMaps ? 1 : 0);
-         CRes.a(RMS_EVENT, s);
+         CRes.saveString(RMS_EVENT, s);
       } catch (Exception e) {
       }
    }
 
    public static void loadPersistedEventSettings() {
       try {
-         String s = CRes.b(RMS_EVENT);
+         String s = CRes.loadString(RMS_EVENT);
          if (s == null) return;
          int p1 = s.indexOf('|');
          int p2 = p1 < 0 ? -1 : s.indexOf('|', p1 + 1);
@@ -1380,21 +1380,21 @@ public final class ClientUtilities {
 
    public static void persistAutoClickSettings() {
       try {
-         CRes.a(RMS_AUTO_CLICK, autoClickKeyCode + ";" + autoClickStartKey + ";" + autoClickIntervalMs + ";" + (autoClickShowToggleNotice ? 1 : 0));
+         CRes.saveString(RMS_AUTO_CLICK, autoClickKeyCode + ";" + autoClickStartKey + ";" + autoClickIntervalMs + ";" + (autoClickShowToggleNotice ? 1 : 0));
       } catch (Throwable var1) {
       }
    }
 
    public static void persistAutoGiftSettings() {
       try {
-         CRes.a(RMS_AUTO_GIFT, autoGiftGiftId + "\n" + autoGiftLimit + "\n" + autoGiftIntervalMs + "\n" + autoGiftPayBy);
+         CRes.saveString(RMS_AUTO_GIFT, autoGiftGiftId + "\n" + autoGiftLimit + "\n" + autoGiftIntervalMs + "\n" + autoGiftPayBy);
       } catch (Throwable var1) {
       }
    }
 
    public static void persistAutoTrollSettings() {
       try {
-         CRes.a(RMS_AUTO_TROLL, autoTrollCode + "\n" + autoTrollLimit + "\n" + autoTrollIntervalMs);
+         CRes.saveString(RMS_AUTO_TROLL, autoTrollCode + "\n" + autoTrollLimit + "\n" + autoTrollIntervalMs);
       } catch (Throwable var1) {
       }
    }
@@ -1407,7 +1407,7 @@ public final class ClientUtilities {
             if (i + 1 < autoStoneSellStoneSelected.length) sell += ",";
          }
 
-         CRes.a(RMS_AUTO_STONE,
+         CRes.saveString(RMS_AUTO_STONE,
                  autoStoneIntervalMs + "\n"
                          + autoStoneStartKey + "\n"
                          + (autoStoneRecoverHealth ? 1 : 0) + "\n"
@@ -1462,7 +1462,7 @@ public final class ClientUtilities {
    }
 
    private static void loadPersistedAutoClickSettings() {
-      String s = CRes.b(RMS_AUTO_CLICK);
+      String s = CRes.loadString(RMS_AUTO_CLICK);
       if (s == null) {
          return;
       }
@@ -1649,14 +1649,14 @@ public final class ClientUtilities {
             sell += (fishingSellFishSelected[i] ? "1" : "0");
             if (i + 1 < fishingSellFishSelected.length) sell += ",";
          }
-         CRes.a(RMS_FISHING, (fishingAutoLogin ? "1" : "0") + "|" + (fishingAutoBuyBait ? "1" : "0") + "|" + (fishingRedFieldEnabled ? "1" : "0") + "|" + fishingCounter + "|" + fishingSoldCounter + "|" + sell + "|" + (fishingAutoBuyTicket ? "1" : "0") + "|" + fishingSelectedTicket + "|" + (fishingAutoBuyRod ? "1" : "0") + "|" + fishingSelectedRod + "|" + (autoStoneEnabled ? "1" : "0") + "|" + (fishingAutoSellStone ? "1" : "0"));
+         CRes.saveString(RMS_FISHING, (fishingAutoLogin ? "1" : "0") + "|" + (fishingAutoBuyBait ? "1" : "0") + "|" + (fishingRedFieldEnabled ? "1" : "0") + "|" + fishingCounter + "|" + fishingSoldCounter + "|" + sell + "|" + (fishingAutoBuyTicket ? "1" : "0") + "|" + fishingSelectedTicket + "|" + (fishingAutoBuyRod ? "1" : "0") + "|" + fishingSelectedRod + "|" + (autoStoneEnabled ? "1" : "0") + "|" + (fishingAutoSellStone ? "1" : "0"));
       } catch (Exception e) {
       }
    }
 
    private static void loadPersistedFishingSettings() {
       try {
-         String s = CRes.b(RMS_FISHING);
+         String s = CRes.loadString(RMS_FISHING);
          if (s == null) return;
          String[] parts = splitLines3(s);
          if (parts == null || parts.length == 0) {
@@ -2082,7 +2082,7 @@ public final class ClientUtilities {
    }
 
    private static void loadPersistedAutoTrollSettings() {
-      String s = CRes.b(RMS_AUTO_TROLL);
+      String s = CRes.loadString(RMS_AUTO_TROLL);
       if (s == null) {
          return;
       }
@@ -2121,7 +2121,7 @@ public final class ClientUtilities {
    }
 
    private static void loadPersistedAutoStoneSettings() {
-      String s = CRes.b(RMS_AUTO_STONE);
+      String s = CRes.loadString(RMS_AUTO_STONE);
       if (s == null) {
          return;
       }
@@ -2534,7 +2534,7 @@ public final class ClientUtilities {
    }
 
    private static void loadPersistedAutoGiftSettings() {
-      String s = CRes.b(RMS_AUTO_GIFT);
+      String s = CRes.loadString(RMS_AUTO_GIFT);
       if (s == null) {
          return;
       }
@@ -3100,7 +3100,7 @@ public final class ClientUtilities {
          }
          if (fishingAutoBaitNeedReturnMove && fishingAutoBaitReturnX >= 0 && fishingAutoBaitReturnY >= 0) {
             GameMidlet.avatar.posFocus = new AvPosition(fishingAutoBaitReturnX, fishingAutoBaitReturnY);
-            GameMidlet.avatar.l();
+            GameMidlet.avatar.moveToFocus();
             MapScr.doMove(fishingAutoBaitReturnX, fishingAutoBaitReturnY, GameMidlet.avatar.direct, GameMidlet.avatar.direct_);
             fishingAutoBaitNeedReturnMove = false;
             fishingAutoBaitNeedResumeSit = true;
@@ -3152,7 +3152,7 @@ public final class ClientUtilities {
       if (map == 13 && fishingAutoBuyBaitPending) {
          if (GameMidlet.avatar.x != 286 || GameMidlet.avatar.y != 48) {
             GameMidlet.avatar.posFocus = new AvPosition(286, 48);
-            GameMidlet.avatar.l();
+            GameMidlet.avatar.moveToFocus();
             MapScr.doMove(286, 48, 2, (short)0);
             fishingAutoBaitNextAtMs = now + 2000L;
             return;
@@ -3447,7 +3447,7 @@ public final class ClientUtilities {
       
       
       GameMidlet.avatar.posFocus = new AvPosition(targetX, targetY);
-      GameMidlet.avatar.l();
+      GameMidlet.avatar.moveToFocus();
       MapScr.doMove(targetX, targetY, GameMidlet.avatar.direct, GameMidlet.avatar.direct_);
    }
 

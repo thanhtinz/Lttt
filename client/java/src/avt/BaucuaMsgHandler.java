@@ -17,7 +17,7 @@ public final class BaucuaMsgHandler implements IMiniGameMsgHandler {
             case 20:
                var7 = var1.reader().readByte();
                BCBoardScr.me_.saveTime = var7;
-               BCBoardScr.me_.b(var7);
+               BCBoardScr.me_.onStartGame((byte)var2, (byte)var3, var7);
                return;
             case 21:
                if ((var7 = var1.reader().readByte()) == -1) {
@@ -44,8 +44,6 @@ public final class BaucuaMsgHandler implements IMiniGameMsgHandler {
 
                BCBoardScr.me_.onResult(var10);
                BoardScr.setCmdWaiting();
-               return;
-            case 49:
                return;
             case 51:
                int[] var8 = new int[BoardScr.avatarInfos.size()];

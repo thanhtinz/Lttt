@@ -12,7 +12,7 @@ public final class CRes {
    private static short[] sinn = new short[]{0, 18, 36, 54, 71, 89, 107, 125, 143, 160, 178, 195, 213, 230, 248, 265, 282, 299, 316, 333, 350, 367, 384, 400, 416, 433, 449, 465, 481, 496, 512, 527, 543, 558, 573, 587, 602, 616, 630, 644, 658, 672, 685, 698, 711, 724, 737, 749, 761, 773, 784, 796, 807, 818, 828, 839, 849, 859, 868, 878, 887, 896, 904, 912, 920, 928, 935, 943, 949, 956, 962, 968, 974, 979, 984, 989, 994, 998, 1002, 1005, 1008, 1011, 1014, 1016, 1018, 1020, 1022, 1023, 1023, 1024, 1024};
    private static short[] coss;
    private static int[] tann;
-   public static String b;
+   public static String secretKey;
 
    public static void init() {
       coss = new short[91];
@@ -118,10 +118,10 @@ public final class CRes {
       return var0 >= 0 ? var0 : -var0;
    }
 
-   public static void b() {
-      GameMidlet.n = b(PaintPopup.name);
-      PopupShop.i = b(GameMidlet.m);
-      MapScr.j = b(b);
+   public static void loadSavedData() {
+      GameMidlet.n = loadString(PaintPopup.name);
+      PopupShop.i = loadString(GameMidlet.m);
+      MapScr.j = loadString(secretKey);
    }
 
    public static int distance(int var0, int var1, int var2, int var3) {
@@ -139,7 +139,7 @@ public final class CRes {
       }
    }
 
-   private static byte[] b(byte[] var0) {
+   private static byte[] invertBytes(byte[] var0) {
       if (var0 != null) {
          for(int var1 = 0; var1 < var0.length; ++var1) {
             var0[var1] = (byte)(~var0[var1]);
@@ -150,7 +150,7 @@ public final class CRes {
    }
 
    public static void saveRMS(String var0, byte[] var1) throws RecordStoreException {
-      var1 = b(var1);
+      var1 = invertBytes(var1);
       RecordStore var2;
       if ((var2 = RecordStore.openRecordStore(GameMidlet.APP_VERSION + var0, true)).getNumRecords() > 0) {
          var2.setRecord(1, var1, 0, var1.length);
@@ -171,10 +171,10 @@ public final class CRes {
          return null;
       }
 
-      return b(var1);
+      return invertBytes(var1);
    }
 
-   public static void a(String var0, String var1) {
+   public static void saveString(String var0, String var1) {
       try {
          saveRMS(var0, var1.getBytes("UTF-8"));
       } catch (Exception var3) {
@@ -183,7 +183,7 @@ public final class CRes {
 
    }
 
-   public static String b(String var0) {
+   public static String loadString(String var0) {
       byte[] var3;
       if ((var3 = loadRMS(var0)) == null) {
          return null;
@@ -206,7 +206,7 @@ public final class CRes {
       return Image.createImage(var0, 0, var0.length);
    }
 
-   public static void c() {
+   public static void computeCommandChecksum() {
       LoginScr.s = 1;
 
       for(int var0 = 0; var0 < FarmScr.gI().K.size(); ++var0) {

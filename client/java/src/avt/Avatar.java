@@ -357,7 +357,7 @@ public final class Avatar extends Base {
                }
             } else {
                this.au = 0;
-               this.p();
+               this.resetMovement();
                this.isSetAction = false;
             }
          }
@@ -597,7 +597,7 @@ public final class Avatar extends Base {
             int var5 = super.v * CRes.cos(this.angle) >> 10;
             var3 = -(super.v * CRes.sin(this.angle)) >> 10;
             if (this.isSetAction && this.task == -5 && GameMidlet.avatar.setLayPLayer(super.x + var5, super.y + super.direct_ + var3)) {
-               this.p();
+               this.resetMovement();
                super.vx = super.vy = 0;
             } else {
                super.vx = var5;
@@ -702,7 +702,7 @@ public final class Avatar extends Base {
          if (Canvas.keyHold[2]) {
             AvCamera.gI().timeDelay = 0L;
             this.isJumps = -1;
-            this.o();
+            this.finishFeelAction();
             if (super.M) {
                super.vy = -super.v;
             } else if (this.detectCollisionMap(super.vx, -(super.v - 1))) {
@@ -872,7 +872,7 @@ public final class Avatar extends Base {
 
    public final void resetTypeChair() {
       if (super.action != 2 && super.action != 13) {
-         this.o();
+         this.finishFeelAction();
       } else {
          int var1;
          if ((var1 = LoadMap.getposMap(super.x, super.y - 18)) == -1) {
@@ -899,7 +899,7 @@ public final class Avatar extends Base {
 
    }
 
-   private void o() {
+   private void finishFeelAction() {
       if (super.action == 14) {
          super.action = 0;
          this.setPos(HouseScr.gI().f, HouseScr.gI().g);
@@ -1093,7 +1093,7 @@ public final class Avatar extends Base {
       super.action = 0;
    }
 
-   private void p() {
+   private void resetMovement() {
       this.au = 0;
       this.isSetAction = false;
       this.task = 0;
@@ -1109,7 +1109,7 @@ public final class Avatar extends Base {
 
    }
 
-   public final void l() {
+   public final void moveToFocus() {
       if (this.at == null) {
          this.createAvatarArrays();
       }

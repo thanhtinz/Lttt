@@ -220,8 +220,8 @@ public final class Menu extends MenuMain {
       super.updateKey();
       ++this.count;
       boolean var2 = false;
-      if (!Canvas.a(2) && !Canvas.a(4)) {
-         if (Canvas.a(8) || Canvas.a(6)) {
+      if (!Canvas.isKeyPressed(2) && !Canvas.isKeyPressed(4)) {
+         if (Canvas.isKeyPressed(8) || Canvas.isKeyPressed(6)) {
             var2 = true;
             ++this.selected;
             if (this.selected > this.size - 1) {
@@ -240,7 +240,7 @@ public final class Menu extends MenuMain {
          super.isHide_ = false;
       }
 
-      if (Canvas.isPointerClick && Canvas.b(this.menuX - 2, this.m - 7, this.menuW + 4, this.menuH + 15)) {
+      if (Canvas.isPointerClick && Canvas.isPointerInRect(this.menuX - 2, this.m - 7, this.menuW + 4, this.menuH + 15)) {
          Canvas.isPointerClick = false;
          this.y = this.cmy;
          this.B = System.currentTimeMillis() / 10L;
@@ -289,7 +289,7 @@ public final class Menu extends MenuMain {
             this.cmy = this.cmtoY;
          }
 
-         if (Canvas.isPointerRelease && Canvas.b(this.menuX - 2, this.m - 7, this.menuW + 4, this.menuH + 15)) {
+         if (Canvas.isPointerRelease && Canvas.isPointerInRect(this.menuX - 2, this.m - 7, this.menuW + 4, this.menuH + 15)) {
             var6 = (int)(this.count - this.D);
             if (CRes.abs(var7 = this.z - Canvas.py) > 40 && var6 < 10 && this.cmtoY > 0 && this.cmtoY < this.cmyLim) {
                this.vY = var7 / var6 * 10;

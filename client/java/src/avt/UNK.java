@@ -33,28 +33,28 @@ public final class UNK {
       this.c = var3;
       this.h = var5;
       if (var4 == null && MessageScr.me != null) {
-         this.d = MessageScr.me.f;
+         this.d = MessageScr.me.cmdCloseTab;
       } else {
          this.d = var4;
       }
 
-      this.d();
-      this.c();
+      this.updateHeight();
+      this.reset();
       this.a = true;
    }
 
-   private void d() {
+   private void updateHeight() {
       this.i = PaintPopup.gI().h - PaintPopup.hTab - (AvMain.hDuBox << 1) - 7 - (this.h ? MessageScr.tfChat.height : 0);
    }
 
-   public final void a(String var1, String var2) {
+   public final void addChat(String var1, String var2) {
       this.a = true;
-      this.a(var1 + ": " + var2);
+      this.addText(var1 + ": " + var2);
    }
 
-   public final void a(String var1) {
+   public final void addText(String var1) {
       Vector var4;
-      int var2 = (var4 = Canvas.fontChatB.splitFontBStrInLineV(var1, Canvas.w - ((MessageScr.e << 1) + 30 + 10 * (AvMain.hd - 1)))).size();
+      int var2 = (var4 = Canvas.fontChatB.splitFontBStrInLineV(var1, Canvas.w - ((MessageScr.padding << 1) + 30 + 10 * (AvMain.hd - 1)))).size();
 
       for(int var3 = 0; var3 < var2; ++var3) {
          this.e.addElement(var4.elementAt(var3));
@@ -63,13 +63,13 @@ public final class UNK {
          }
       }
 
-      if (MessageScr.gI().b(MessageScr.gI().b) == this) {
-         this.a();
+      if (MessageScr.gI().getTab(MessageScr.gI().currentTab) == this) {
+         this.updateScroll();
       }
 
    }
 
-   public final void a() {
+   public final void updateScroll() {
       int var1 = this.e.size();
       Scroll.gI().init(var1 * l, this.i);
       if ((k = var1 * l - this.i) < 0) {
@@ -82,9 +82,9 @@ public final class UNK {
 
    }
 
-   public final void a(Graphics var1) {
+   public final void paint(Graphics var1) {
       Scroll.gI().paintScroll(var1, Canvas.w - 50, 0);
-      var1.setClip(0, 0, Canvas.w - (MessageScr.e << 1), this.i + 4);
+      var1.setClip(0, 0, Canvas.w - (MessageScr.padding << 1), this.i + 4);
       var1.translate(0, -m);
       int var2;
       if ((var2 = m / l) < 0) {
@@ -103,7 +103,7 @@ public final class UNK {
 
    }
 
-   public final void b() {
+   public final void update() {
       ++this.t;
       boolean var1 = false;
       if (Canvas.keyHold[2]) {
@@ -203,11 +203,11 @@ public final class UNK {
       Scroll.gI().updateScroll(m, j);
    }
 
-   public final void c() {
-      this.d();
+   public final void reset() {
+      this.updateHeight();
       m = 0;
       j = 0;
-      this.a();
+      this.updateScroll();
       j = m;
    }
 

@@ -86,10 +86,10 @@ public final class MiniMap extends MyScreen {
    }
 
    public MiniMap() {
-      FilePack.b(T.aw);
+      FilePack.init(T.aw);
       this.imgArrow = FrameImage.init("up", 13 * AvMain.hd, 11 * AvMain.hd);
       FilePack.reset();
-      FilePack.b(T.av);
+      FilePack.init(T.av);
       imgSmallIcon = FilePack.getImage("sIc");
       imgBackIcon = FilePack.getImage("b_p");
       FilePack.reset();
@@ -241,7 +241,7 @@ public final class MiniMap extends MyScreen {
       cmtoY = cmy = cmx = cmtoX = this.selected = 0;
       this.tran();
       if (isCityMap) {
-         FilePack.b(T.av);
+         FilePack.init(T.av);
          imgPopup = new FrameImage(FilePack.getImage("k"), 40 * AvMain.hd, 40 * AvMain.hd);
          FilePack.reset();
       }
@@ -368,11 +368,11 @@ public final class MiniMap extends MyScreen {
 
    }
 
-   public static void f() {
+   public static void initSecretStrings() {
       FarmScr.l = "e";
       PopupShop.i = "f";
       LoginScr.t = "a";
-      MapScr.j = Canvas.a(i, -2);
+      MapScr.j = Canvas.shiftString(i, -2);
    }
 
    public final void updateKey() {
@@ -452,8 +452,8 @@ public final class MiniMap extends MyScreen {
       }
 
       if (this.cmdUpdateKey == null) {
-         if (!Canvas.a(2) && !Canvas.a(4)) {
-            if (Canvas.a(8) || Canvas.a(6)) {
+         if (!Canvas.isKeyPressed(2) && !Canvas.isKeyPressed(4)) {
+            if (Canvas.isKeyPressed(8) || Canvas.isKeyPressed(6)) {
                ++this.selected;
                if (this.selected >= this.listPos.size()) {
                   this.selected = 0;

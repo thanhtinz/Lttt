@@ -73,7 +73,7 @@ public final class TLBoardScr extends BoardScr {
          case 70:
             super.currentPlayer = -1;
             this.forceMove3Bich = false;
-            CasinoService.gI().e();
+            CasinoService.gI().skip();
             Canvas.endDlg();
       }
 
@@ -238,7 +238,7 @@ public final class TLBoardScr extends BoardScr {
       this.setPosCard(false);
    }
 
-   private void b(int var1) {
+   private void moveSelect(int var1) {
       if (this.selectedCard_ == -1) {
          super.selectedCard += var1;
          if (super.selectedCard >= this.cards.size()) {
@@ -294,9 +294,9 @@ public final class TLBoardScr extends BoardScr {
                      if (super.selectedCard != var3) {
                         if (this.selectedCard_ != -1) {
                            if (var3 < this.selectedCard_) {
-                              this.b(-1);
+                              this.moveSelect(-1);
                            } else if (var3 > this.selectedCard_) {
-                              this.b(1);
+                              this.moveSelect(1);
                            }
 
                            super.selectedCard = this.selectedCard_;
@@ -330,13 +330,13 @@ public final class TLBoardScr extends BoardScr {
             }
          }
 
-         if (Canvas.a(6)) {
-            this.b(1);
-         } else if (Canvas.a(4)) {
-            this.b(-1);
+         if (Canvas.isKeyPressed(6)) {
+            this.moveSelect(1);
+         } else if (Canvas.isKeyPressed(4)) {
+            this.moveSelect(-1);
          }
 
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             if (this.selectedCard_ != -1) {
                this.selectedCard_ = -1;
                this.setPosCard(true);
@@ -347,7 +347,7 @@ public final class TLBoardScr extends BoardScr {
             this.setPosCard(true);
          }
 
-         if (Canvas.a(8)) {
+         if (Canvas.isKeyPressed(8)) {
             if (((Card)this.cards.elementAt(super.selectedCard)).f) {
                this.doSelect();
                this.setPosCard(true);
@@ -375,7 +375,7 @@ public final class TLBoardScr extends BoardScr {
 
       if (BoardScr.dieTime != 0L && (BoardScr.currentTime = System.currentTimeMillis()) > BoardScr.dieTime) {
          if (super.currentPlayer == GameMidlet.avatar.IDDB) {
-            CasinoService.gI().e();
+            CasinoService.gI().skip();
             super.currentPlayer = -1;
          }
 

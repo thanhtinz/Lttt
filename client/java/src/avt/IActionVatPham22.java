@@ -10,6 +10,6 @@ final class IActionVatPham22 implements IAction {
    }
 
    public final void perform() {
-      FarmScr.a(this.a, this.b);
+      FarmScr.confirmBreakTree(this.a, this.b);
    }
 }

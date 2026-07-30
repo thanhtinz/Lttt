@@ -49,7 +49,7 @@ public final class GlobalService extends IService {
          }
 
          super.m.writer().writeUTF(var4);
-         super.m.writer().writeInt(d());
+         super.m.writer().writeInt(getRmsSize());
          super.m.writer().writeInt(Canvas.w);
          super.m.writer().writeInt(Canvas.h);
          super.m.writer().writeBoolean(Canvas.isKeyBoard);
@@ -74,7 +74,7 @@ public final class GlobalService extends IService {
       this.sendMessage();
    }
 
-   private static int d() {
+   private static int getRmsSize() {
       long var0 = 0L;
       RecordStore var2 = null;
 
@@ -261,7 +261,7 @@ public final class GlobalService extends IService {
       this.sendMessage();
    }
 
-   public final void b(String var1, String var2, String var3) {
+   public final void doLoadCard(String var1, String var2, String var3) {
       this.createMessage((byte)-56);
 
       try {

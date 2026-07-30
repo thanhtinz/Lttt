@@ -205,7 +205,7 @@ public final class DialLuckyScr extends MyScreen {
    }
 
    public DialLuckyScr() {
-      FilePack.b(T.ax);
+      FilePack.init(T.ax);
       this.b = FilePack.getImage("c");
       this.d = FilePack.getImage("sq");
       this.e = FilePack.getImage("q");
@@ -236,14 +236,14 @@ public final class DialLuckyScr extends MyScreen {
 
    private void persistAutoDialSettings() {
       try {
-         CRes.a(RMS_AUTO_DIAL, this.autoDialLimit + "\n" + this.autoDialDelay);
+         CRes.saveString(RMS_AUTO_DIAL, this.autoDialLimit + "\n" + this.autoDialDelay);
       } catch (Throwable t) {
       }
    }
 
    private void loadPersistedAutoDialSettings() {
       try {
-         String s = CRes.b(RMS_AUTO_DIAL);
+         String s = CRes.loadString(RMS_AUTO_DIAL);
          if (s == null) {
             return;
          }

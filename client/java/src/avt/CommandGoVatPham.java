@@ -5,12 +5,12 @@ import main.Canvas;
 
 final class CommandGoVatPham extends Command {
    private final FarmItem item;
-   private final int ii;
+   private final int focusIndex;
 
    CommandGoVatPham(FarmScr var1, String var2, int var3, int var4, FarmItem var5, int var6) {
       super(var2, 9, var4);
       this.item = var5;
-      this.ii = var6;
+      this.focusIndex = var6;
    }
 
    public final void paint(Graphics var1, int var2, int var3) {
@@ -18,7 +18,7 @@ final class CommandGoVatPham extends Command {
    }
 
    public final void update() {
-      if (this.ii == PopupShop.focus) {
+      if (this.focusIndex == PopupShop.focus) {
          PopupShop.resetIsTrans();
          PopupShop.addStr("Id: " + this.item.ID);
          PopupShop.addStr(this.item.des);

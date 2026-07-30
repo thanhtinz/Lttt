@@ -196,14 +196,14 @@ public final class RoomListOnScr extends MyScreen {
       }
 
       if (Canvas.stypeInt != 0) {
-         this.g();
+         this.fillEmptyRooms();
       }
 
       this._selected = 1;
       this.init();
    }
 
-   private boolean g() {
+   private boolean fillEmptyRooms() {
       for(int var1 = 0; var1 < this.roomList.size(); ++var1) {
          RoomInfo var2;
          if ((var2 = (RoomInfo)this.roomList.elementAt(var1)).id == -1) {

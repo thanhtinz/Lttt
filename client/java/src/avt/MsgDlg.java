@@ -45,7 +45,7 @@ public final class MsgDlg extends Dialog {
 
    public final void setInfoC(String var1, Command var2, Vector var3) {
       if (ChatTextField.isShow) {
-         ChatTextField.gI().a();
+         ChatTextField.gI().closeChat();
       }
 
       this.hCell = MyScreen.hText;
@@ -244,10 +244,10 @@ public final class MsgDlg extends Dialog {
          --this.indexRight;
       }
 
-      if (Canvas.a(4)) {
+      if (Canvas.isKeyPressed(4)) {
          this.setIndex(-1);
          this.indexLeft = 5;
-      } else if (Canvas.a(6)) {
+      } else if (Canvas.isKeyPressed(6)) {
          this.setIndex(1);
          this.indexRight = 5;
       }

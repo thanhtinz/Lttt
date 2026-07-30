@@ -17,7 +17,7 @@ final class class_kh implements Runnable {
       if (this.a.session.connecting) {
          try {
             Session_ME.setSc(this.a.session).close();
-            Sender.a(Session_ME.getSender(this.a.session)).removeAllElements();
+            Sender.getSendingMessage(Session_ME.getSender(this.a.session)).removeAllElements();
          } catch (Exception var2) {
          }
 

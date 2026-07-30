@@ -6,12 +6,12 @@ import main.GameMidlet;
 
 final class CommandIceDream extends Command {
    private final Item item;
-   private final int ii;
+   private final int focusIndex;
 
    CommandIceDream(MapScr var1, String var2, IAction var3, Item var4, int var5) {
       super(var2, var3);
       this.item = var4;
-      this.ii = var5;
+      this.focusIndex = var5;
    }
 
    public final void paint(Graphics var1, int var2, int var3) {
@@ -19,7 +19,7 @@ final class CommandIceDream extends Command {
    }
 
    public final void update() {
-      if (this.ii == PopupShop.focus || PopupShop.k) {
+      if (this.focusIndex == PopupShop.focus || PopupShop.k) {
          PopupShop.resetIsTrans();
          PopupShop.addStr("Id: " + this.item.idIcon);
          PopupShop.addStr(this.item.name);

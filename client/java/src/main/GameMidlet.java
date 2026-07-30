@@ -52,7 +52,7 @@ public class GameMidlet extends MIDlet {
       }
 
       if (PROVIDER == -1) {
-         AvatarData.d();
+         AvatarData.loadProvider();
       }
 
       InputStream var9 = CRes.getResourceAsStream("/agent.txt");
@@ -68,7 +68,7 @@ public class GameMidlet extends MIDlet {
       } catch (Exception e) {
       }
 
-      (canvas = new Canvas()).d();
+      (canvas = new Canvas()).startThread();
       avatar = new Avatar();
       myIndexP = new IndexPlayer();
       SplashScr.gI().switchToMe();
@@ -77,7 +77,7 @@ public class GameMidlet extends MIDlet {
       Display.getDisplay(this).setCurrent(canvas);
       Session_ME.gI().setHandler(GlobalMessageHandler.gI());
       String var8;
-      if ((var8 = CRes.b("avatar")) == null || !var8.equals(APP_VERSION)) {
+      if ((var8 = CRes.loadString("avatar")) == null || !var8.equals(APP_VERSION)) {
          AvatarData.delRMS();
       }
 

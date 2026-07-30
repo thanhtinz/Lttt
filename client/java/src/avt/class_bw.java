@@ -8,6 +8,6 @@ final class class_bw implements IAction {
    }
 
    public final void perform() {
-      this.a.b = 0;
+      this.a.isPlaying = 0;
    }
 }

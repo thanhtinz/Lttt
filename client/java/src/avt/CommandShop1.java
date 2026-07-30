@@ -5,7 +5,7 @@ import main.Canvas;
 import main.GameMidlet;
 
 final class CommandShop1 extends Command {
-   private int i = 0;
+   private int focusIndex = 0;
    private String nameItem;
    private String timeLimit;
    private short idPart;
@@ -14,7 +14,7 @@ final class CommandShop1 extends Command {
 
    public CommandShop1(HouseScr var1, String var2, IAction var3, int var4, String var5, short var6, short var7, String var8, int var9, String var10, short var11) {
       super(var2, var3);
-      this.i = var4;
+      this.focusIndex = var4;
       this.nameItem = var5;
       this.idPart = var6;
       this.timeLimit = var8;
@@ -23,7 +23,7 @@ final class CommandShop1 extends Command {
    }
 
    public final void update() {
-      if (PopupShop.isTransFocus && this.i == PopupShop.focus) {
+      if (PopupShop.isTransFocus && this.focusIndex == PopupShop.focus) {
          PopupShop.resetIsTrans();
          Part var1;
          if (GameMidlet.avatar.gender == 1) {

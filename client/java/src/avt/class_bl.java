@@ -11,12 +11,12 @@ final class class_bl implements IAction {
 
    public final void perform() {
       int var1;
-      if ((var1 = SoundManager.a.a("" + this.b)) == -1) {
+      if ((var1 = SoundManager.instance.setSound("" + this.b)) == -1) {
          GlobalService.gI().doRequestSoundData(this.b);
       } else {
-         SoundManager.a.a((byte[])((byte[])SoundManager.a(this.a).elementAt(var1)));
+         SoundManager.instance.playSoundData((byte[])((byte[])SoundManager.getSound(this.a).elementAt(var1)));
       }
 
-      this.a.b = 1;
+      this.a.isPlaying = 1;
    }
 }

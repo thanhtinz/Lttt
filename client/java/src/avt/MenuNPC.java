@@ -140,14 +140,14 @@ public final class MenuNPC extends MenuMain {
       super.updateKey();
       ++this.count;
       boolean var1 = false;
-      if (Canvas.a(2)) {
+      if (Canvas.isKeyPressed(2)) {
          --this.focus;
          if (this.focus < 0) {
             this.focus = this.list.size() - 1;
          }
 
          var1 = true;
-      } else if (Canvas.a(8)) {
+      } else if (Canvas.isKeyPressed(8)) {
          ++this.focus;
          if (this.focus >= this.list.size()) {
             this.focus = 0;
@@ -159,7 +159,7 @@ public final class MenuNPC extends MenuMain {
       if (Canvas.isPointerClick) {
          this.pyLast = Canvas.pyLast;
          this.isG = false;
-         if (Canvas.b(this.x + this.xList, this.y + this.yList, this.wList, this.hList)) {
+         if (Canvas.isPointerInRect(this.x + this.xList, this.y + this.yList, this.wList, this.hList)) {
             if (this.vY != 0) {
                this.isG = true;
             }
@@ -210,7 +210,7 @@ public final class MenuNPC extends MenuMain {
             this.cmy = this.cmtoY;
          }
 
-         if (Canvas.isPointerRelease && Canvas.b(this.x, this.y, this.w, this.h)) {
+         if (Canvas.isPointerRelease && Canvas.isPointerInRect(this.x, this.y, this.w, this.h)) {
             this.isG = false;
             var5 = (int)(this.count - this.timePoint);
             if (CRes.abs(var6 = this.dyTran - Canvas.py) > 40 && var5 < 10 && this.cmtoY > 0 && this.cmtoY < this.cmyLim) {
@@ -230,7 +230,7 @@ public final class MenuNPC extends MenuMain {
             this.trans = false;
             Canvas.isPointerRelease = false;
          }
-      } else if (Canvas.isPointerRelease && !Canvas.b(this.x, this.y, this.w, this.h)) {
+      } else if (Canvas.isPointerRelease && !Canvas.isPointerInRect(this.x, this.y, this.w, this.h)) {
          Canvas.isPointerRelease = false;
          Canvas.menuMain = null;
       }

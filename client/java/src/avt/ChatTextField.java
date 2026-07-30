@@ -32,7 +32,7 @@ public final class ChatTextField extends AvMain {
       }
    }
 
-   public final void a() {
+   public final void closeChat() {
       this.tfChat.setText("");
       isShow = false;
       this.tfChat.setFocus(true);
@@ -53,7 +53,7 @@ public final class ChatTextField extends AvMain {
       this.init();
       this.tfChat.x = (Canvas.w - this.tfChat.width) / 2;
       this.tfChat.setMaxTextLenght(40);
-      super.right = this.tfChat.a();
+      super.right = this.tfChat.getRightCmd();
    }
 
    public final void init() {
@@ -66,7 +66,7 @@ public final class ChatTextField extends AvMain {
       this.tfChat.width = Canvas.w - 10;
    }
 
-   public final void b(int var1) {
+   public final void keyPress(int var1) {
       if (isShow) {
          this.tfChat.keyPressed(var1);
       }

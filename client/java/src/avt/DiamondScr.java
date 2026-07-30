@@ -46,7 +46,7 @@ public final class DiamondScr extends BoardScr {
    public DiamondScr() {
       this.cmdSelected = new Command(T.selectt, 20);
       this.cmdSkip = new Command(T.skip, 21);
-      FilePack.b(T.ax);
+      FilePack.init(T.ax);
       this.imgFireWork = FrameImage.init("st", 11 * AvMain.hd, 11 * AvMain.hd);
       FilePack.reset();
    }
@@ -400,7 +400,7 @@ public final class DiamondScr extends BoardScr {
                   }
                } else if (var8.task == -1) {
                   if (var8.isNo && Canvas.gameTick % 6 == 3) {
-                     this.c(var8.x, var8.y - var8.height, 0);
+                     this.spawnFirework(var8.x, var8.y - var8.height, 0);
                   }
 
                   if (this.countHit != -1) {
@@ -502,7 +502,7 @@ public final class DiamondScr extends BoardScr {
          int var6 = 0;
          switch (var3) {
             case 0:
-               this.c(var1 + this.x, var2 + this.y, 0);
+               this.spawnFirework(var1 + this.x, var2 + this.y, 0);
                return;
             case 1:
                var5 = var4.x;
@@ -536,7 +536,7 @@ public final class DiamondScr extends BoardScr {
                var6 = var4.y - 5 * AvMain.hd;
                break;
             case 4:
-               this.c(var1 + this.x, var2 + this.y, 4);
+               this.spawnFirework(var1 + this.x, var2 + this.y, 4);
                return;
             case 5:
                return;
@@ -569,7 +569,7 @@ public final class DiamondScr extends BoardScr {
 
    }
 
-   private void c(int var1, int var2, int var3) {
+   private void spawnFirework(int var1, int var2, int var3) {
       if (var3 != -1) {
          Point var4;
          (var4 = new Point(var1, var2)).limitY = 1;
@@ -655,7 +655,7 @@ public final class DiamondScr extends BoardScr {
       }
 
       if (BoardScr.isStartGame && super.center != BoardScr.cmdWaiting) {
-         if (Canvas.a(2)) {
+         if (Canvas.isKeyPressed(2)) {
             if (!this.isPath && !this.isTrans) {
                if (this.V >= 8) {
                   this.V -= 8;
@@ -664,7 +664,7 @@ public final class DiamondScr extends BoardScr {
                this.change();
                return;
             }
-         } else if (Canvas.a(4)) {
+         } else if (Canvas.isKeyPressed(4)) {
             if (!this.isPath && !this.isTrans) {
                if (this.V % 8 > 0) {
                   --this.V;
@@ -673,7 +673,7 @@ public final class DiamondScr extends BoardScr {
                this.change();
                return;
             }
-         } else if (Canvas.a(6)) {
+         } else if (Canvas.isKeyPressed(6)) {
             if (!this.isPath && !this.isTrans) {
                if (this.V % 8 < 7) {
                   ++this.V;
@@ -682,7 +682,7 @@ public final class DiamondScr extends BoardScr {
                this.change();
                return;
             }
-         } else if (Canvas.a(8) && !this.isPath && !this.isTrans) {
+         } else if (Canvas.isKeyPressed(8) && !this.isPath && !this.isTrans) {
             if (this.V / 8 < 7) {
                this.V += 8;
             }
@@ -860,7 +860,7 @@ public final class DiamondScr extends BoardScr {
          }
 
          Canvas.O.drawString(var1, var7, this.x + (this.wCell << 3) / 2, this.y + (this.wCell << 3) + Canvas.O.getHeight() + 2, 2);
-         this.f(var1);
+         this.paintFireWork(var1);
       }
 
    }
@@ -980,7 +980,7 @@ public final class DiamondScr extends BoardScr {
 
    }
 
-   private void f(Graphics var1) {
+   private void paintFireWork(Graphics var1) {
       for(int var2 = 0; var2 < this.listFireWork.size(); ++var2) {
          Point var3;
          if ((var3 = (Point)this.listFireWork.elementAt(var2)).limitY > 0) {

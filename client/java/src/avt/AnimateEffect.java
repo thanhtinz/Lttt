@@ -35,7 +35,7 @@ public final class AnimateEffect extends Effect {
          case 1:
             this.number = 30;
             if (img == null) {
-               FilePack.b(T.av);
+               FilePack.init(T.av);
                img = FrameImage.init("cobay", 16 * AvMain.hd, 10 * AvMain.hd);
                FilePack.reset();
             }
@@ -44,7 +44,7 @@ public final class AnimateEffect extends Effect {
             break;
          case 3:
             this.number = Canvas.w * Canvas.h / 1000;
-            FilePack.b(T.av);
+            FilePack.init(T.av);
             FrameImage.init("tuyet", 5 * AvMain.hd, 5 * AvMain.hd);
             FilePack.reset();
             e = img;

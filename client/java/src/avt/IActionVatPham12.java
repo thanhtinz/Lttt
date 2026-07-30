@@ -10,7 +10,7 @@ final class IActionVatPham12 implements IAction {
    }
 
    public final void perform() {
-      FarmScr.a(this.a, FarmScr.indexItem, this.b.anchor);
-      FarmScr.a(this.a);
+      FarmScr.doPlantSeedAt(this.a, FarmScr.indexItem, this.b.anchor);
+      FarmScr.openGieoHat(this.a);
    }
 }

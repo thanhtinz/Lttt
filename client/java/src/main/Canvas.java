@@ -92,8 +92,8 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
       hCan = h = this.getHeight();
       t = new T();
       AvMain.hd = 1;
-      if (CRes.b(GameMidlet.m) == null) {
-         FarmData.c();
+      if (CRes.loadString(GameMidlet.m) == null) {
+         FarmData.initSecretData();
       }
 
       stypeInt = 0;
@@ -148,7 +148,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
          timeBB = new long[4];
       }
 
-      TField.b(instance.getGameAction(48) == 0 && instance.getGameAction(49) == 0 && instance.getGameAction(50) == 0 && instance.getGameAction(51) == 0 && instance.getGameAction(52) == 0 && instance.getGameAction(53) == 0 && instance.getGameAction(54) == 0 && instance.getGameAction(55) == 0 && instance.getGameAction(56) == 0 && instance.getGameAction(57) == 0);
+      TField.setNoGameAction(instance.getGameAction(48) == 0 && instance.getGameAction(49) == 0 && instance.getGameAction(50) == 0 && instance.getGameAction(51) == 0 && instance.getGameAction(52) == 0 && instance.getGameAction(53) == 0 && instance.getGameAction(54) == 0 && instance.getGameAction(55) == 0 && instance.getGameAction(56) == 0 && instance.getGameAction(57) == 0);
       CRes.init();
       ClientUtilities.loadPersistedUtilitySettings();
       menuMain = new Menu();
@@ -163,14 +163,14 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
          au = new Vector();
       }
 
-      a();
+      initCommands();
       if ((V = (ao = (int)(Runtime.getRuntime().totalMemory() / 1024L)) / 17) < 60) {
          V = 60;
       }
 
    }
 
-   public static void a() {
+   public static void initCommands() {
       ad = new avt.Command(T.no, -1);
       Menu.gI().initCmd();
       if (currentMyScreen != null) {
@@ -261,11 +261,11 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
       }
 
       if (CustomTab.me != null) {
-         CustomTab.gI().d();
+         CustomTab.gI().refresh();
       }
 
       if (isKeyBoard && MyScreen.ap == null) {
-         FilePack.b(T.aw);
+         FilePack.init(T.aw);
          MyScreen.ap = FilePack.getImage("bpa");
          MyScreen.aq = FilePack.getImage("icon_chat");
          FilePack.reset();
@@ -273,7 +273,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
 
       if (currentMyScreen != null) {
          if (currentMyScreen == ServerListScr.me) {
-            ServerListScr.gI().e();
+            ServerListScr.gI().setupPopupBox();
          }
 
          if (currentMyScreen == OptionScr.instance) {
@@ -281,7 +281,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
          }
 
          if (currentMyScreen == ListScr.gI()) {
-            ListScr.gI().f();
+            ListScr.gI().setupPopupBox();
          }
 
          if (currentMyScreen == MoneyScr.gI()) {
@@ -295,7 +295,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
 
    }
 
-   public static void a(String var0) {
+   public static void showScrollInfo(String var0) {
       if (!OnScreen.isOngame && !var0.equals("")) {
          StringObj var1;
          (var1 = new StringObj(var0, -normalFont.getWidth(var0))).x = w + 10;
@@ -344,7 +344,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
 
    }
 
-   public final void d() {
+   public final void startThread() {
       if (!aq) {
          (new Thread(this)).start();
       }
@@ -388,7 +388,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
 
             if (load != 0) {
                if (z != null) {
-                  z.a();
+                  z.updateKey();
                }
 
                if (welcome != null && currentDialog == null) {
@@ -668,7 +668,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
             currentFace.keyPress(var1);
          } else if (menuMain == null) {
             if (ChatTextField.isShow) {
-               ChatTextField.gI().b(var1);
+               ChatTextField.gI().keyPress(var1);
             } else {
                currentMyScreen.keyPress(var1);
             }
@@ -740,7 +740,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
 
    }
 
-   public static boolean a(int var0) {
+   public static boolean isKeyPressed(int var0) {
       if (keyPressed[var0]) {
          keyPressed[var0] = false;
          return true;
@@ -889,7 +889,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
 
    }
 
-   public static String a(String var0, int var1) {
+   public static String shiftString(String var0, int var1) {
       String var2 = "";
 
       for(int var3 = 0; var3 < var0.length(); ++var3) {
@@ -1045,7 +1045,7 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
       }
 
       if (z != null) {
-         z.a(var1);
+         z.paint(var1);
       }
 
       resetTrans(var1);
@@ -1248,10 +1248,10 @@ public final class Canvas extends javax.microedition.lcdui.Canvas implements Run
    }
 
    public static boolean isPointer(int var0, int var1, int var2, int var3) {
-      return !isPointerDown && !isPointerRelease ? false : b(var0, var1, var2, var3);
+      return !isPointerDown && !isPointerRelease ? false : isPointerInRect(var0, var1, var2, var3);
    }
 
-   public static boolean b(int var0, int var1, int var2, int var3) {
+   public static boolean isPointerInRect(int var0, int var1, int var2, int var3) {
       return px >= var0 && px <= var0 + var2 && py >= var1 && py <= var1 + var3;
    }
 
