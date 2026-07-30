@@ -1,0 +1,15 @@
+{
+  "name": "avatar-server-node",
+  "version": "0.1.0",
+  "description": "Avatar game server ported from Java to Node.js (same protocol, same DB, same logic)",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.11.0"
+  }
+}

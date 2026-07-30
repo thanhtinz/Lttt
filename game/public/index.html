@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Avatar Top-Down (Node.js)</title>
+<style>
+  html,body{margin:0;height:100%;background:#1a1f2b;overflow:hidden;font-family:system-ui,Segoe UI,Arial,sans-serif}
+  #game{position:absolute;inset:0}
+  #login{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0f1522;z-index:20}
+  #login .box{background:#18213a;border:1px solid #26304d;border-radius:14px;padding:24px;width:330px;color:#dfe6f5}
+  #login h1{font-size:18px;margin:0 0 14px;text-align:center}
+  #login h2{font-size:12px;margin:16px 0 6px;color:#8b97b4;text-transform:uppercase;letter-spacing:.5px}
+  #login input,#login select{width:100%;box-sizing:border-box;margin:4px 0;padding:9px;border-radius:8px;border:1px solid #26304d;background:#0f1626;color:#dfe6f5}
+  #login .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #login button{width:100%;margin-top:10px;padding:11px;border:none;border-radius:8px;background:#4f8cff;color:#fff;font-size:15px;cursor:pointer}
+  #login .guest{background:#26304d}
+  #login .err{color:#ff5d6c;font-size:13px;min-height:16px;text-align:center}
+  #hud{position:absolute;left:0;right:0;bottom:0;z-index:10;display:none;padding:6px}
+  #chatlog{max-height:120px;overflow:auto;color:#fff;font-size:13px;text-shadow:0 1px 2px #000;padding:4px 8px}
+  #chatlog div{margin:2px 0}
+  #chatform{display:flex;gap:6px;padding:0 8px 4px}
+  #chatform input{flex:1;padding:8px;border-radius:8px;border:1px solid #26304d;background:rgba(15,22,38,.85);color:#dfe6f5}
+  #chatform button{padding:8px 14px;border:none;border-radius:8px;background:#4f8cff;color:#fff;cursor:pointer}
+  #hint{position:absolute;top:8px;left:8px;z-index:10;color:#fff;font-size:12px;text-shadow:0 1px 2px #000;display:none}
+</style>
+</head>
+<body>
+<div id="game"></div>
+<div id="hint">WASD / mũi tên để di chuyển · Enter để chat</div>
+<div id="hud">
+  <div id="chatlog"></div>
+  <form id="chatform"><input id="chatinput" maxlength="120" placeholder="Nhập tin nhắn rồi Enter..." autocomplete="off"><button>Gửi</button></form>
+</div>
+<div id="login">
+  <div class="box">
+    <h1>🎮 Avatar Top-Down</h1>
+    <div class="err" id="err"></div>
+    <input id="u" placeholder="Tài khoản (hoặc tên khi chơi khách)" autocomplete="username">
+    <input id="p" type="password" placeholder="Mật khẩu" autocomplete="current-password">
+
+    <h2>Tạo hình nhân vật</h2>
+    <div class="two">
+      <select id="sel-base" title="Tông da"></select>
+      <select id="sel-clothes" title="Trang phục"></select>
+      <select id="sel-cc" title="Màu trang phục"></select>
+      <select id="sel-hair" title="Kiểu tóc"></select>
+      <select id="sel-hc" title="Màu tóc"></select>
+      <select id="sel-ec" title="Màu mắt"></select>
+    </div>
+
+    <button id="btn-login">Đăng nhập</button>
+    <button id="btn-guest" class="guest">Chơi khách</button>
+  </div>
+</div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
